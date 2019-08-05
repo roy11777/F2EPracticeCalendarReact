@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 class Mainpage extends React.Component {
   constructor() {
