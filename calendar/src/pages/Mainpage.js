@@ -53,8 +53,6 @@ class Mainpage extends React.Component {
 
     // console.log(nowYear)
     // console.log(nowMonth)
-    //   console.log(tableStartDate)
-    //   console.log(tableStartDate)
 
     for (let i = 0; i < 42; i++) {
       const obj = {}
