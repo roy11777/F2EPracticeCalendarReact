@@ -1,3 +1,45 @@
+$screen-phone: 320px; // 手機 ;
+$screen-tablet: 768px; // 平板
+$screen-desktop: 980px; // 筆電、桌機
+$screen-lg-desktop: 1280px; // 較大桌機　
+
+$screen-phone-max: 767px;
+$screen-tablet-max: 979px;
+$screen-desktop-max: 1279px;
+
+$screen-lg-desktop-wrapper: 890px;
+$screen-desktop-wrapper: 710px;
+$calendarWidth: 50%;
+$monthBg: #ede9dd;
+
 .list-unstyle {
   list-style: none;
+}
+
+.d-flex {
+  display: flex;
+}
+.wrapper {
+  width: $screen-desktop;
+  .calender {
+    width: $calendarWidth;
+    margin: 0 auto;
+    .weekDays {
+      ul {
+        li {
+          background: #ede9dd;
+          cursor: pointer;
+        }
+      }
+    }
+    .calendarMain {
+      table {
+        thead {
+          tr {
+            background: yellow;
+          }
+        }
+      }
+    }
+  }
 }

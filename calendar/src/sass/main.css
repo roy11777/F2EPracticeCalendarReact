@@ -1,0 +1,24 @@
+.list-unstyle {
+  list-style: none;
+}
+
+.d-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.wrapper .calender {
+  width: 980px;
+  margin: 0 auto;
+}
+
+.wrapper .calender .weekDays ul li {
+  background: #ede9dd;
+  cursor: pointer;
+}
+
+.wrapper .calender .calendarMain table thead tr {
+  background: yellow;
+}
+/*# sourceMappingURL=main.css.map */
