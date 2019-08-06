@@ -2,23 +2,49 @@
   list-style: none;
 }
 
+.jusifyCenter {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.alignCenter {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .d-flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.wrapper .calender {
+.wrapper {
   width: 980px;
+}
+
+.wrapper .calender {
+  width: 50%;
   margin: 0 auto;
 }
 
-.wrapper .calender .weekDays ul li {
+.wrapper .calender .weekday div {
   background: #ede9dd;
   cursor: pointer;
 }
 
-.wrapper .calender .calendarMain table thead tr {
+.wrapper .calender .calendarMain .weekday {
   background: yellow;
+}
+
+.wrapper .calender .calendarMain .dateContent {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.wrapper .calender .calendarMain .dateContent .itinerary {
+  width: calc((1 / 7) * 100%);
+  background: blue;
 }
 /*# sourceMappingURL=main.css.map */
