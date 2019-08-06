@@ -92,6 +92,19 @@ class Mainpage extends React.Component {
     await this.setState({ currentMonth: nowMonth + 1 })
     await this.handleMonthContent(this.state.jasondata)
   }
+  monthswitchLeft = async () => {
+    // await this.setState({ currentMonth: nowMonth - 1 })
+    // console.log(e.target)
+    this.prevMonth()
+  }
+  monthswitchRight = () => {
+    // console.log(e.target)
+    this.nextMonth()
+  }
+  monthswitchMiddle = async () => {
+    // console.log(e.target)
+    await this.handleMonthContent(this.state.jasondata)
+  }
 
   render() {
     const showMonth = this.state.currentMonth
@@ -105,16 +118,16 @@ class Mainpage extends React.Component {
           <div className="calender">
             <div className="monthYears">
               <div className="list-unstyle d-flex alignCenter">
-                <div onClick={this.monthChange} className="">
+                <div onClick={this.monthswitchLeft} className="">
                   {(showMonth === 1 ? showYear - 1 : showYear) +
                     '年' +
                     (showMonth === 1 ? 12 : showMonth - 1) +
                     '月'}
                 </div>
-                <div onClick={this.monthChange} className="">
+                <div onClick={this.monthswitchMiddle} className="">
                   {showYear + '年' + showMonth + '月'}
                 </div>
-                <div onClick={this.monthChange} className="">
+                <div onClick={this.monthswitchRight} className="">
                   {(showMonth === 12 ? showYear + 1 : showYear) +
                     '年' +
                     (showMonth === 12 ? 1 : showMonth + 1) +
@@ -135,7 +148,7 @@ class Mainpage extends React.Component {
               <div className="dateContent d-flex ">
                 {this.state.nowMonthData.map(function(ele, index) {
                   const tour = ele.matchTour
-                  console.log(tour)
+                  //   console.log(tour)
                   return (
                     <div
                       key={index + +new Date()}
