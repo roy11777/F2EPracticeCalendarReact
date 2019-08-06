@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import DateContainer from '../components/DateContainer'
 
 class Mainpage extends React.Component {
   constructor() {
@@ -18,7 +19,7 @@ class Mainpage extends React.Component {
     try {
       const response = await fetch('/data/data1.json')
       const jsonObject = await response.json()
-      //   console.log(jsonObject)
+      console.log(jsonObject)
       //   設state方便提用傳入內容產生function
       await this.setState({ jasondata: jsonObject })
       this.handleMonthContent(jsonObject)
@@ -107,6 +108,7 @@ class Mainpage extends React.Component {
   render() {
     const showMonth = this.state.currentMonth
     const showYear = this.state.currentYear
+    console.log(this.state.nowMonthData)
     return (
       <>
         <button>切換</button>
@@ -144,66 +146,7 @@ class Mainpage extends React.Component {
                 <div>星期六</div>
               </div>
               <div className="dateContent d-flex ">
-                {this.state.nowMonthData.map(function(ele, index) {
-                  const tour = ele.matchTour
-                  //   console.log(tour)
-                  return (
-                    <div
-                      key={index + +new Date()}
-                      className="d-flex jusifyCenter alignCenter itinerary"
-                    >
-                      <span>
-                        {ele.calendarDate
-                          .slice(
-                            ele.calendarDate.length - 2,
-                            ele.calendarDate.length
-                          )
-                          // 將yyyy/mm/dd處理成DD並移除0
-                          .replace(/^0+/, '')}
-                      </span>
-                      <span>
-                        {tour.length === 0
-                          ? ''
-                          : tour.length > 1
-                          ? ''
-                          : tour[0].guaranteed === true
-                          ? '成團'
-                          : ''
-                        //判斷是否無行程避免undefined在判斷是否超過一個行程顯示不同內容
-                        // 如果只有一個行程在render進html
-                        }
-                      </span>
-                      <span>
-                        {tour.length === 0
-                          ? ''
-                          : tour.length > 1
-                          ? ''
-                          : tour[0].status}
-                      </span>
-                      <span>
-                        {tour.length === 0
-                          ? ''
-                          : tour.length > 1
-                          ? ''
-                          : tour[0].availableVancancy}
-                      </span>
-                      <span>
-                        {tour.length === 0
-                          ? ''
-                          : tour.length > 1
-                          ? ''
-                          : tour[0].totalVacnacy}
-                      </span>
-                      <span>
-                        {tour.length === 0
-                          ? ''
-                          : tour.length > 1
-                          ? ''
-                          : tour[0].price}
-                      </span>
-                    </div>
-                  )
-                })}
+                {/* <DateContainer dataSource={this.state.nowMonthData} /> */}
               </div>
             </div>
           </div>
