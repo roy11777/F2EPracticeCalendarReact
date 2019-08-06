@@ -5,9 +5,9 @@ class Mainpage extends React.Component {
   constructor() {
     super()
     this.state = {
-      nowMonth: [],
-      currentYear: 2019,
-      currentMonth: 8,
+      nowMonthData: [],
+      currentYear: moment().year(),
+      currentMonth: moment().month() + 1, //month index 0~11
     }
   }
 
@@ -19,32 +19,7 @@ class Mainpage extends React.Component {
     } catch (e) {
       console.log(e)
     }
-    const nowNowYear = this.state.currentYear
-    const nowMonth = this.state.currentMonth
-    const dateArray = []
-    const dateArraySplit = []
-    const monthStartWeekday = moment([nowNowYear, nowMonth - 1, 1]).weekday()
-    const tableStartDate = moment([nowNowYear, nowMonth - 1, 1])
-      .add(-monthStartWeekday, 'days')
-      .date()
-    //4
-    console.log(monthStartWeekday)
-    console.log(tableStartDate)
-
-    for (let i = 0; i < 42; i++) {
-      const allDateArray = moment([2019, 7, 1])
-        .add(-monthStartWeekday + i, 'days')
-        .date()
-      dateArray.push(allDateArray)
-    }
-    for (let i = 0; i < 6; i++) {
-      dateArraySplit.push(dateArray.slice(i * 7, i * 7 + 7))
-    }
-    await this.setState({ nowMonth: dateArraySplit })
-    console.log(dateArray)
-    console.log(dateArraySplit)
-    console.log(this.state.nowMonth)
-
+    this.handleMonthContent()
     // console.log(m.get('years'))
     // console.log(moment('12-25-1995', 'MM-DD-YYYY'))
     // console.log(dayWrapper)
@@ -61,23 +36,88 @@ class Mainpage extends React.Component {
     //   })
     // )
   }
+  handleMonthContent = async () => {
+    if (this.state.currentMonth < 1) {
+      this.setState({
+        currentMonth: 12,
+        currentYear: this.state.currentYear - 1,
+      })
+      console.log(this.state.currentYear)
+      console.log(this.state.currentMonth)
+    }
+    if (this.state.currentMonth > 12) {
+      this.setState({
+        currentMonth: 1,
+        currentYear: this.state.currentYear + 1,
+      })
+      console.log(this.state.currentYear)
+      console.log(this.state.currentMonth)
+    }
+    const nowYear = this.state.currentYear
+    const nowMonth = this.state.currentMonth
+    const dateArray = []
+    const dateArraySplit = []
+    // 當前月份第幾格開始
+    const monthStartWeekday = moment([nowYear, nowMonth - 1, 1]).weekday()
+
+    console.log(nowYear)
+    console.log(nowMonth)
+    //   console.log(tableStartDate)
+    //   console.log(tableStartDate)
+
+    for (let i = 0; i < 42; i++) {
+      const allDateArray = moment([nowYear, nowMonth - 1, 1])
+        //   扣掉當月開始日期回到第一格
+        .add(-monthStartWeekday + i, 'days')
+        .date()
+      dateArray.push(allDateArray)
+    }
+    for (let i = 0; i < 6; i++) {
+      dateArraySplit.push(dateArray.slice(i * 7, i * 7 + 7))
+    }
+    await this.setState({ nowMonthData: dateArraySplit })
+    //   console.log(dateArray)
+    //   console.log(dateArraySplit)
+    //   console.log(this.state.nowMonthData)
+  }
+
+  prevMonth = async () => {
+    const nowMonth = this.state.currentMonth
+    await this.setState({ currentMonth: nowMonth - 1 })
+    await this.handleMonthContent()
+  }
+  nextMonth = async () => {
+    const nowMonth = this.state.currentMonth
+    await this.setState({ currentMonth: nowMonth + 1 })
+    await this.handleMonthContent()
+  }
 
   render() {
+    const showMonth = this.state.currentMonth
+    const showYear = this.state.currentYear
     return (
       <>
         <button>切換</button>
+        <button onClick={this.prevMonth}>左</button>
+        <button onClick={this.nextMonth}>右</button>
         <div className="wrapper">
           <div className="calender">
             <div className="weekDays">
               <ul className="list-unstyle d-flex">
-                <li onclick={this.monthChange} className="">
-                  {this.state.currentMonth - 1 + '月'}
+                <li onClick={this.monthChange} className="">
+                  {(showMonth === 1 ? showYear - 1 : showYear) +
+                    '年' +
+                    (showMonth === 1 ? 12 : showMonth - 1) +
+                    '月'}
                 </li>
-                <li onclick={this.monthChange} className="">
-                  {this.state.currentMonth + '月'}
+                <li onClick={this.monthChange} className="">
+                  {showYear + '年' + showMonth + '月'}
                 </li>
-                <li onclick={this.monthChange} className="">
-                  {this.state.currentMonth + 1 + '月'}
+                <li onClick={this.monthChange} className="">
+                  {(showMonth === 12 ? showYear + 1 : showYear) +
+                    '年' +
+                    (showMonth === 12 ? 1 : showMonth + 1) +
+                    '月'}
                 </li>
               </ul>
             </div>
@@ -95,11 +135,11 @@ class Mainpage extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.nowMonth.map((ele, index) => (
+                  {this.state.nowMonthData.map((ele, index) => (
                     <tr key={index + +new Date()}>
                       {ele.map((e, ind) => (
-                        <td>
-                          <div key={ind + +new Date()}>
+                        <td key={ind + +new Date() + 1}>
+                          <div>
                             <span>{e}</span>
                           </div>
                         </td>
