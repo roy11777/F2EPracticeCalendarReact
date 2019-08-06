@@ -21,7 +21,7 @@
 }
 
 .wrapper {
-  width: 980px;
+  width: 1280px;
 }
 
 .wrapper .calender {
@@ -29,13 +29,22 @@
   margin: 0 auto;
 }
 
-.wrapper .calender .weekday div {
+.wrapper .calender .monthYears div {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   background: #ede9dd;
   cursor: pointer;
+  text-align: center;
 }
 
 .wrapper .calender .calendarMain .weekday {
   background: yellow;
+}
+
+.wrapper .calender .calendarMain .weekday div {
+  width: calc((1 / 7) * 100%);
+  text-align: center;
 }
 
 .wrapper .calender .calendarMain .dateContent {
