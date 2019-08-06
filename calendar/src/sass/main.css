@@ -2,23 +2,58 @@
   list-style: none;
 }
 
+.jusifyCenter {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.alignCenter {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .d-flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
+.wrapper {
+  width: 1280px;
+}
+
 .wrapper .calender {
-  width: 980px;
+  width: 50%;
   margin: 0 auto;
 }
 
-.wrapper .calender .weekDays ul li {
+.wrapper .calender .monthYears div {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   background: #ede9dd;
   cursor: pointer;
+  text-align: center;
 }
 
-.wrapper .calender .calendarMain table thead tr {
+.wrapper .calender .calendarMain .weekday {
   background: yellow;
+}
+
+.wrapper .calender .calendarMain .weekday div {
+  width: calc((1 / 7) * 100%);
+  text-align: center;
+}
+
+.wrapper .calender .calendarMain .dateContent {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.wrapper .calender .calendarMain .dateContent .itinerary {
+  width: calc((1 / 7) * 100%);
+  background: blue;
 }
 /*# sourceMappingURL=main.css.map */

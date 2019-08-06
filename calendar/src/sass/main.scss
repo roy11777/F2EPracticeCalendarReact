@@ -15,29 +15,42 @@ $monthBg: #ede9dd;
 .list-unstyle {
   list-style: none;
 }
+.jusifyCenter {
+  justify-content: center;
+}
+.alignCenter {
+  align-items: center;
+}
 
 .d-flex {
   display: flex;
 }
 .wrapper {
-  width: $screen-desktop;
+  width: $screen-lg-desktop;
   .calender {
     width: $calendarWidth;
     margin: 0 auto;
-    .weekDays {
-      ul {
-        li {
-          background: #ede9dd;
-          cursor: pointer;
-        }
+    .monthYears {
+      div {
+        flex-grow: 1;
+        background: #ede9dd;
+        cursor: pointer;
+        text-align: center;
       }
     }
     .calendarMain {
-      table {
-        thead {
-          tr {
-            background: yellow;
-          }
+      .weekday {
+        background: yellow;
+        div {
+          width: calc((1 / 7) * 100%);
+          text-align: center;
+        }
+      }
+      .dateContent {
+        flex-wrap: wrap;
+        .itinerary {
+          width: calc((1 / 7) * 100%);
+          background: blue;
         }
       }
     }
