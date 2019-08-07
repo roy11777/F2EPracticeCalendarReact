@@ -7,11 +7,23 @@ class Mainpage extends React.Component {
     super()
     this.state = {
       jasondata: [],
-      nowMonthData: [],
+      dataSource: [],
       currentYear: 2017,
       currentMonth: 9, //month index 0~11
       //   currentYear: moment().year(),
       //   currentMonth: moment().month() + 1, //month index 0~11
+      dataKeySetting: {
+        // 保證出團
+        guaranteed: 'guaranteed',
+        // 狀態
+        status: 'status',
+        // 可賣團位
+        available: 'availableVancancy',
+        // 團位
+        total: 'totalVacnacy',
+        // 價格
+        price: 'price',
+      },
     }
   }
 
@@ -19,10 +31,10 @@ class Mainpage extends React.Component {
     try {
       const response = await fetch('/data/data1.json')
       const jsonObject = await response.json()
-      console.log(jsonObject)
       //   設state方便提用傳入內容產生function
       await this.setState({ jasondata: jsonObject })
-      this.handleMonthContent(jsonObject)
+      console.log(jsonObject)
+      await this.handleMonthContent(jsonObject)
     } catch (e) {
       console.log(e)
     }
@@ -75,9 +87,9 @@ class Mainpage extends React.Component {
       //   console.log(obj.matchTour[0])
       dateArray.push(obj)
     }
-    await this.setState({ nowMonthData: dateArray })
+    await this.setState({ dataSource: dateArray })
     console.log(dateArray)
-    console.log(this.state.nowMonthData)
+    console.log(this.state.dataSource)
   }
 
   prevMonth = async () => {
@@ -108,7 +120,6 @@ class Mainpage extends React.Component {
   render() {
     const showMonth = this.state.currentMonth
     const showYear = this.state.currentYear
-    console.log(this.state.nowMonthData)
     return (
       <>
         <button>切換</button>
@@ -146,7 +157,7 @@ class Mainpage extends React.Component {
                 <div>星期六</div>
               </div>
               <div className="dateContent d-flex ">
-                {/* <DateContainer dataSource={this.state.nowMonthData} /> */}
+                <DateContainer dataSource={this.state.dataSource} />
               </div>
             </div>
           </div>

@@ -4,13 +4,13 @@ class DateContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-    console.log(props)
   }
 
   render() {
+    console.log(this.props)
     return (
       <>
-        {this.props.nowMonthData.map(function(ele, index) {
+        {this.props.dataSource.map(function(ele, index) {
           const tour = ele.matchTour
           //   console.log(tour)
           return (
