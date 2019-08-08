@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+// import '/moment/locale/zh-tw'
 
 class DateContainer extends React.Component {
   constructor(props) {
@@ -27,7 +28,11 @@ class DateContainer extends React.Component {
           price: jsonObject[i][settingObj.price],
         }
         parseData.push(obj)
-        // console.log(obj)
+        // console.log(
+        //   moment(obj.date, 'YYYY/MM/DD')
+        //     .locale('zh-tw')
+        //     .day()
+        // )
       }
       //   設state方便提用傳入內容產生function
       //   await this.setState({ fetchData: jsonObject })
@@ -85,6 +90,29 @@ class DateContainer extends React.Component {
             </div>
           )
         })}
+        <div className="">
+          {this.props.Package.CurrentDataPart.map(function(e, index) {
+            //   moment.locale('zh-tw')
+            //   console.log(moment(e.date, 'YYYY/MM/DD').weekdays(0))
+            return (
+              <div key={index + +new Date()} className="itineraryStraight">
+                <div className="date">
+                  <span>{moment(e.date, 'YYYY/MM/DD').get('date')}</span>
+                  <span>{'星期' + moment(e.date, 'YYYY/MM/DD').weekday()}</span>
+                </div>
+                <div className="detail">
+                  <span>{e.available}</span>
+                  <span>{e.total}</span>
+                  <span>{e.guaranteed}</span>
+                </div>
+                <div className="priceStatus">
+                  <span>{e.status}</span>
+                  <span>{e.price}</span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </>
     )
   }

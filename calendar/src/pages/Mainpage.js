@@ -10,8 +10,11 @@ class Mainpage extends React.Component {
     super()
     this.state = {
       fetchData: [],
+      //   當月整理好全部資料
       CurrentData: [],
-      dataSource: '/data/data1try.json',
+      //   當月全部資料，未整
+      CurrentDataPart: [],
+      dataSource: '/data/data1.json',
       initYearMonth: 201807,
     }
     // this.handleMonthContent = this.handleMonthContent.bind(this)
@@ -49,10 +52,22 @@ class Mainpage extends React.Component {
     const nowMonthAlltour = await jsonData.filter(
       item => item.date.indexOf(moment(init, 'YYYYMM').format('YYYY/MM')) !== -1
     )
-    console.log(nowMonthAlltour)
-    // console.log(monthStartWeekday)
-    // console.log(nowMonth)
+    // 深層複製一個用來排序的資料
+    const cloneObj = Object.assign(jsonData)
+    // console.log(nowMonthAlltour)
 
+    // console.log(nowMonth)
+    // 將當月所有行程排序--------------------------------------------------
+    const AllNewObj = await cloneObj.filter(
+      item => item.date.indexOf(moment(init, 'YYYYMM').format('YYYY/MM')) !== -1
+    )
+    AllNewObj.sort(function(a, b) {
+      console.log(moment(a.date, 'YYYY/MM/DD').milliseconds())
+      return moment(a.date, 'YYYY/MM/DD') - moment(b.date, 'YYYY/MM/DD')
+    })
+    console.log(AllNewObj)
+
+    // 產生月曆並將符合對應日子行程整合--------------------------------------
     for (let i = 0; i < 42; i++) {
       const allDateArray = moment(init, 'YYYYMM')
         //   扣掉當月開始日期回到第一格
@@ -63,7 +78,7 @@ class Mainpage extends React.Component {
       const match = await nowMonthAlltour.filter(
         item => item.date.indexOf(yearDate) !== -1
       )
-      console.log(match)
+      //   console.log(match)
       //   設定當月超出範圍不顯示資料
       let obj = {}
       if (i < monthStartWeekday) {
@@ -71,7 +86,6 @@ class Mainpage extends React.Component {
         obj = { calendarDate: '', matchTour: [] }
         dateArray.push(obj)
       } else if (i >= monthStartWeekday + monthDays) {
-        console.log(i)
         obj = { calendarDate: '', matchTour: [] }
         dateArray.push(obj)
       } else {
@@ -86,11 +100,15 @@ class Mainpage extends React.Component {
       //   console.log(obj.matchTour[0])
     }
     await this.setState({
+      // 排序資料
+      CurrentDataPart: AllNewObj,
+      //   原始順序資料
       CurrentData: dateArray,
+      //   初始所有行程資料
       fetchData: jsonData,
     })
     // console.log(dateArray)
-    console.log(this.state.initYearMonth)
+    console.log(this.state.CurrentDataPart)
   }
 
   prevMonth = async jsonData => {
@@ -145,6 +163,7 @@ class Mainpage extends React.Component {
       .format('YYYYMM 月')
     // const dataSource = this.state.fetchData
     const Package = {
+      CurrentDataPart: this.state.CurrentDataPart,
       CurrentData: this.state.CurrentData,
       dataSource: this.state.dataSource,
       initYearMonth: this.state.initYearMonth,
