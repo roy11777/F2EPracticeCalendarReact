@@ -53,6 +53,7 @@
 }
 
 .wrapper .calender .calendarMain .dateContent .itinerary {
+  height: 50px;
   width: calc((1 / 7) * 100%);
   background: blue;
 }

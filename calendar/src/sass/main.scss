@@ -49,6 +49,7 @@ $monthBg: #ede9dd;
       .dateContent {
         flex-wrap: wrap;
         .itinerary {
+          height: 50px;
           width: calc((1 / 7) * 100%);
           background: blue;
         }

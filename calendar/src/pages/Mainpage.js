@@ -11,12 +11,8 @@ class Mainpage extends React.Component {
     this.state = {
       fetchData: [],
       CurrentData: [],
-      dataSource: '/data/data1.json',
-      initYearMonth: 201705,
-      //   currentYear: 2017,
-      //   currentMonth: 9, //month index 0~11
-      //   //   currentYear: moment().year(),
-      //   //   currentMonth: moment().month() + 1, //month index 0~11
+      dataSource: '/data/data1try.json',
+      initYearMonth: 201807,
     }
     // this.handleMonthContent = this.handleMonthContent.bind(this)
     // this.dataInput = React.createRef()
@@ -38,57 +34,56 @@ class Mainpage extends React.Component {
   handleMonthContent = async jsonData => {
     // YYYYMM大小寫影響抓到傳入的日期或現在日期,大寫抓傳入
     const init = this.state.initYearMonth
-    // let nowMonth = moment(init, 'YYYYMM').get('month')
-    // let nowYear = moment(init, 'YYYYMM').get('year')
-    // const newyearDate = Number(
-    //   moment(init, 'YYYYMM')
-    //     // .add(1, 'months')
-    //     .format('YYYYMM')
-    // )
-    // console.log(nowMonth)
-    // console.log(nowYear)
-    // if (nowMonth < 1) {
-    //   nowMonth = 12
-    //   nowYear = nowYear - 1
-    //   console.log(nowYear)
-    //   console.log(nowMonth)
-    // }
-    // if (nowMonth > 12) {
-    //   nowMonth = 1
-    //   nowYear = nowYear + 1
-    //   console.log(nowYear)
+
     console.log(jsonData)
     // }
 
     // 存放每日日期與所有對應到行程
     const dateArray = []
+
     // 當前月份第幾格開始
     const monthStartWeekday = moment(init, 'YYYYMM').weekday()
-
-    console.log(monthStartWeekday)
+    // 當月天數
+    const monthDays = moment(init, 'YYYYMM').daysInMonth()
+    // 當月總共所有行程，不分日期
+    const nowMonthAlltour = await jsonData.filter(
+      item => item.date.indexOf(moment(init, 'YYYYMM').format('YYYY/MM')) !== -1
+    )
+    console.log(nowMonthAlltour)
+    // console.log(monthStartWeekday)
     // console.log(nowMonth)
 
     for (let i = 0; i < 42; i++) {
-      //   const obj = {}
       const allDateArray = moment(init, 'YYYYMM')
         //   扣掉當月開始日期回到第一格
         .add(-monthStartWeekday + i, 'days')
       // 格式化成語json檔案相同格式方便比對
       const yearDate = allDateArray.format('YYYY/MM/DD')
       //   const date = allDateArray.date()
-      const match = await jsonData.filter(
+      const match = await nowMonthAlltour.filter(
         item => item.date.indexOf(yearDate) !== -1
       )
-      //   console.log(allDateArray)
-
-      let obj = { calendarDate: yearDate, matchTour: match }
+      console.log(match)
+      //   設定當月超出範圍不顯示資料
+      let obj = {}
+      if (i < monthStartWeekday) {
+        console.log(i)
+        obj = { calendarDate: '', matchTour: [] }
+        dateArray.push(obj)
+      } else if (i >= monthStartWeekday + monthDays) {
+        console.log(i)
+        obj = { calendarDate: '', matchTour: [] }
+        dateArray.push(obj)
+      } else {
+        obj = { calendarDate: yearDate, matchTour: match }
+        dateArray.push(obj)
+      }
       //   console.log(obj)
       //   先設定日歷需產生之日期calendarDate = yearDate
       //   將比對後相同日期的物件放入整合obj中最後push入相同陣列matchTour = match
 
       //   tour可能會有多筆
       //   console.log(obj.matchTour[0])
-      dateArray.push(obj)
     }
     await this.setState({
       CurrentData: dateArray,

@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 class DateContainer extends React.Component {
   constructor(props) {
@@ -49,10 +50,9 @@ class DateContainer extends React.Component {
               className="d-flex jusifyCenter alignCenter itinerary"
             >
               <span>
-                {ele.calendarDate
-                  .slice(ele.calendarDate.length - 2, ele.calendarDate.length)
-                  // 將yyyy/mm/dd處理成DD並移除0
-                  .replace(/^0+/, '')}
+                {ele.calendarDate === ''
+                  ? ''
+                  : moment(ele.calendarDate, 'YYYY/MM/DD').get('date')}
               </span>
               <span>
                 {tour.length === 0
