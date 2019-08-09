@@ -9,13 +9,16 @@ $screen-desktop-max: 1279px;
 
 $screen-lg-desktop-wrapper: 890px;
 $screen-desktop-wrapper: 710px;
-$font-table-family: 'Arial, Helvetica, sans-serif', '微軟正黑體';
+$font-table-family: '微軟正黑體', 'Arial, Helvetica, sans-serif';
 
 $calendarWidth: 50%;
 $monthBg: #ede9dd;
 $body-bg: #f8f8f8;
 $font-size-weekday: 0.85rem;
+// 月曆版字體大小
 $font-size-info: 0.75rem;
+// 直版中間字體大小
+$font-size-straigt: 0.85rem;
 
 $tourInfo-border-color: #eeeeee;
 // stutus Color
@@ -46,6 +49,21 @@ body {
   background: $body-bg;
   font-family: $font-table-family;
 }
+.blue {
+  color: $tourInfo-color-blue;
+}
+.lightg {
+  color: $tourInfo-color-lightg;
+}
+.org {
+  color: $tourInfo-color-org;
+}
+.gray {
+  color: $tourInfo-color-gray;
+}
+.dark {
+  color: $tourInfo-color-dark;
+}
 .wrapper {
   width: $screen-lg-desktop;
   margin: 0 auto;
@@ -71,19 +89,19 @@ body {
         }
       }
       .calendarMain {
-        .weekday {
-          background: transparent;
-          border: 1px solid $tourInfo-border-color;
-          font-size: $font-size-weekday;
-          font-weight: 600;
-          color: $tourInfo-color-dark;
-          padding: 6px 0;
-          div {
-            width: calc((1 / 7) * 100%);
-            text-align: center;
-          }
-        }
         .dateContent {
+          .weekday {
+            background: transparent;
+            border: 1px solid $tourInfo-border-color;
+            font-size: $font-size-weekday;
+            font-weight: 600;
+            color: $tourInfo-color-dark;
+            padding: 6px 0;
+            div {
+              width: calc((1 / 7) * 100%);
+              text-align: center;
+            }
+          }
           background: transparent;
           .itineraryBox {
             flex-wrap: wrap;
@@ -114,21 +132,7 @@ body {
               .mutiTour {
                 margin-bottom: 1rem;
               }
-              .blue {
-                color: $tourInfo-color-blue;
-              }
-              .lightg {
-                color: $tourInfo-color-lightg;
-              }
-              .org {
-                color: $tourInfo-color-org;
-              }
-              .gray {
-                color: $tourInfo-color-gray;
-              }
-              .dark {
-                color: $tourInfo-color-dark;
-              }
+
               .red {
                 color: $tourInfo-color-red;
                 span {
@@ -151,6 +155,46 @@ body {
           }
           .itineraryStraight {
             width: 100%;
+            height: 60px;
+            box-sizing: border-box;
+            border: 1px solid $tourInfo-border-color;
+            border-top: none !important;
+            .date {
+              width: 10%;
+              flex-direction: column;
+              :first-child {
+                font-size: 1.5rem;
+              }
+            }
+            .detail {
+              width: 65%;
+              font-size: $font-size-straigt;
+              flex-direction: column;
+
+              .ready {
+                background: #ff7800;
+                color: #fff;
+                padding: 1px 4px;
+                border-radius: 4px;
+              }
+              div {
+                padding: 5px 0;
+                span {
+                  margin-right: 20px;
+                }
+              }
+            }
+            .priceStatus {
+              width: 25%;
+              flex-direction: column;
+              align-items: flex-end;
+              span {
+                padding: 2px 5px;
+              }
+              .red {
+                color: $tourInfo-color-red;
+              }
+            }
           }
         }
       }

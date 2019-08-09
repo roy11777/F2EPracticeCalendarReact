@@ -210,15 +210,6 @@ class Mainpage extends React.Component {
                 </div>
               </div>
               <div className="calendarMain">
-                <div className="weekday list-unstyle d-flex jusifyCenter alignCenter">
-                  <div>星期日</div>
-                  <div>星期一</div>
-                  <div>星期二</div>
-                  <div>星期三</div>
-                  <div>星期四</div>
-                  <div>星期五</div>
-                  <div>星期六</div>
-                </div>
                 <div className="dateContent  ">
                   <DateContainer
                     Package={Package}
