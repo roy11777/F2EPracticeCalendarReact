@@ -166,13 +166,13 @@ class Mainpage extends React.Component {
   render() {
     const prevMonth = moment(this.state.initYearMonth, 'YYYYMM')
       .add(-1, 'month')
-      .format('YYYYMM 月')
+      .format('YYYY  M月')
     const nowwMonth = moment(this.state.initYearMonth, 'YYYYMM').format(
-      'YYYYMM 月'
+      'YYYY  M月'
     )
     const nextMonth = moment(this.state.initYearMonth, 'YYYYMM')
       .add(1, 'month')
-      .format('YYYYMM 月')
+      .format('YYYY  M月')
     // const dataSource = this.state.fetchData
     const Package = {
       CurrentDataPart: this.state.CurrentDataPart,
@@ -200,13 +200,13 @@ class Mainpage extends React.Component {
           <div className="container">
             <div className="calender">
               <button onClick={this.handleSwitch}>切換</button>
-              <button onClick={this.prevMonth}>左</button>
-              <button onClick={this.nextMonth}>右</button>
               <div className="monthYears">
                 <div className="list-unstyle d-flex alignCenter">
+                  <div onClick={this.prevMonth}>左</div>
                   <YearMonthLeft prevMonth={prevMonth} />
                   <YearMonthMiddle nowwMonth={nowwMonth} />
                   <YearMonthRight nextMonth={nextMonth} />
+                  <div onClick={this.nextMonth}>右</div>
                 </div>
               </div>
               <div className="calendarMain">

@@ -10,8 +10,11 @@ class YearMonthMiddle extends React.Component {
     // console.log(this.props)
     return (
       <>
-        <div onClick={this.monthswitchMiddle} className="">
-          {this.props.nowwMonth}
+        <div
+          onClick={this.monthswitchMiddle}
+          className="d-flex jusifyCenter alignCenter"
+        >
+          <span> {this.props.nowwMonth}</span>
         </div>
       </>
     )

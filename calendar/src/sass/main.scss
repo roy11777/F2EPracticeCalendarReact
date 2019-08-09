@@ -9,13 +9,15 @@ $screen-desktop-max: 1279px;
 
 $screen-lg-desktop-wrapper: 890px;
 $screen-desktop-wrapper: 710px;
-$font-table-family: '微軟正黑體', 'Arial, Helvetica, sans-serif';
+$font-table-family: 'Arial, Helvetica, sans-serif', '微軟正黑體';
 
 $calendarWidth: 50%;
 $monthBg: #ede9dd;
 $body-bg: #f8f8f8;
+$font-size-weekday: 0.85rem;
 $font-size-info: 0.75rem;
 
+$tourInfo-border-color: #eeeeee;
 // stutus Color
 $tourInfo-color-lightg: #24a07c; // 候補 請洽專員
 $tourInfo-color-org: #ff7800; //報名// 預定
@@ -54,6 +56,7 @@ body {
     margin: 0 auto;
     border: 2px solid #86cacb;
     background: #fff;
+
     .calender {
       width: 100%;
 
@@ -63,11 +66,18 @@ body {
           background: #ede9dd;
           cursor: pointer;
           text-align: center;
+          height: 50px;
+          color: $tourInfo-color-dark;
         }
       }
       .calendarMain {
         .weekday {
-          background: yellow;
+          background: transparent;
+          border: 1px solid $tourInfo-border-color;
+          font-size: $font-size-weekday;
+          font-weight: 600;
+          color: $tourInfo-color-dark;
+          padding: 6px 0;
           div {
             width: calc((1 / 7) * 100%);
             text-align: center;
@@ -77,13 +87,13 @@ body {
           background: transparent;
           .itineraryBox {
             flex-wrap: wrap;
-            border-left: 1px solid #eeeeee;
+            border-left: 1px solid $tourInfo-border-color;
             .disable {
               background: $body-bg;
               border: none !important;
             }
             .itinerary {
-              border: 1px solid #eeeeee;
+              border: 1px solid $tourInfo-border-color;
               border-collapse: collapse;
               border-spacing: 0;
               border-top: none;
