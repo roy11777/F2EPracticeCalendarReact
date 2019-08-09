@@ -196,36 +196,38 @@ class Mainpage extends React.Component {
     console.log(Package.dataSource)
     return (
       <>
-        <button onClick={this.handleSwitch}>切換</button>
-        <button onClick={this.prevMonth}>左</button>
-        <button onClick={this.nextMonth}>右</button>
         <div className="wrapper">
-          <div className="calender">
-            <div className="monthYears">
-              <div className="list-unstyle d-flex alignCenter">
-                <YearMonthLeft prevMonth={prevMonth} />
-                <YearMonthMiddle nowwMonth={nowwMonth} />
-                <YearMonthRight nextMonth={nextMonth} />
+          <div className="container">
+            <div className="calender">
+              <button onClick={this.handleSwitch}>切換</button>
+              <button onClick={this.prevMonth}>左</button>
+              <button onClick={this.nextMonth}>右</button>
+              <div className="monthYears">
+                <div className="list-unstyle d-flex alignCenter">
+                  <YearMonthLeft prevMonth={prevMonth} />
+                  <YearMonthMiddle nowwMonth={nowwMonth} />
+                  <YearMonthRight nextMonth={nextMonth} />
+                </div>
               </div>
-            </div>
-            <div className="calendarMain">
-              <div className="weekday list-unstyle d-flex jusifyCenter alignCenter">
-                <div>星期日</div>
-                <div>星期一</div>
-                <div>星期二</div>
-                <div>星期三</div>
-                <div>星期四</div>
-                <div>星期五</div>
-                <div>星期六</div>
-              </div>
-              <div className="dateContent  ">
-                <DateContainer
-                  Package={Package}
-                  //設ref訪問子層元素，先在父層construct createRef，props下去子層再設ref接
-                  straightData={this.straightData}
-                  rowData={this.rowData}
-                />
-                {/* <DateContainer Package={Package} ref={this.dataInput} /> */}
+              <div className="calendarMain">
+                <div className="weekday list-unstyle d-flex jusifyCenter alignCenter">
+                  <div>星期日</div>
+                  <div>星期一</div>
+                  <div>星期二</div>
+                  <div>星期三</div>
+                  <div>星期四</div>
+                  <div>星期五</div>
+                  <div>星期六</div>
+                </div>
+                <div className="dateContent  ">
+                  <DateContainer
+                    Package={Package}
+                    //設ref訪問子層元素，先在父層construct createRef，props下去子層再設ref接
+                    straightData={this.straightData}
+                    rowData={this.rowData}
+                  />
+                  {/* <DateContainer Package={Package} ref={this.dataInput} /> */}
+                </div>
               </div>
             </div>
           </div>

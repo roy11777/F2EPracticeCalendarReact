@@ -91,21 +91,30 @@ class DateContainer extends React.Component {
     console.log(this.props.Package.CurrentDataPart)
     return (
       <>
+        {/* TODO:border設定 */}
         <div className="d-flex itineraryBox" ref={this.props.rowData}>
           {this.props.Package.CurrentData.map(function(ele, index) {
             const tour = ele.matchTour
-            //   console.log(tour)
+            console.log(ele)
             return (
               <div
                 key={index + +new Date()}
-                className="d-flex jusifyCenter alignCenter itinerary"
+                className={
+                  (ele.calendarDate === '' ? 'disable' : '') +
+                  ' jusifyCenter alignCenter itinerary'
+                }
               >
-                <span>
-                  {ele.calendarDate === ''
-                    ? ''
-                    : moment(ele.calendarDate, 'YYYY/MM/DD').get('date')}
-                </span>
-                <span>
+                <span
+                  className={
+                    tour.length === 0
+                      ? ''
+                      : tour.length > 1
+                      ? ''
+                      : tour[0].guaranteed === true
+                      ? 'readytogo'
+                      : ''
+                  }
+                >
                   {tour.length === 0
                     ? ''
                     : tour.length > 1
@@ -117,33 +126,54 @@ class DateContainer extends React.Component {
                   // 如果只有一個行程在render進html
                   }
                 </span>
-                <span>
+                <span className={tour.length > 1 ? 'mutiTour' : ''}>
+                  {ele.calendarDate === ''
+                    ? ''
+                    : moment(ele.calendarDate, 'YYYY/MM/DD').get('date')}
+                </span>
+                <span
+                  className={
+                    tour.length === 0
+                      ? ''
+                      : tour.length > 1
+                      ? 'blue'
+                      : tour[0].status === '報名'
+                      ? 'org'
+                      : tour[0].status === '預定'
+                      ? 'org'
+                      : tour[0].status === '後補'
+                      ? 'lightg'
+                      : tour[0].status === '請洽專員'
+                      ? 'lightg'
+                      : 'gray'
+                  }
+                >
                   {tour.length === 0
                     ? ''
                     : tour.length > 1
-                    ? tour.length + '團'
+                    ? tour.length + '看更多團'
                     : tour[0].status}
                 </span>
-                <span>
+                <span className={tour.length > 0 ? 'dark' : ''}>
                   {tour.length === 0
                     ? ''
                     : tour.length > 1
                     ? ''
-                    : tour[0].available}
+                    : '可賣：' + tour[0].available}
                 </span>
-                <span>
+                <span className={tour.length > 0 ? 'dark' : ''}>
                   {tour.length === 0
                     ? ''
                     : tour.length > 1
                     ? ''
-                    : tour[0].total}
+                    : '團位：' + tour[0].total}
                 </span>
-                <span>
-                  {tour.length === 0
-                    ? ''
-                    : tour.length > 1
-                    ? ''
-                    : tour[0].price}
+                <span className={tour.length > 0 ? 'red' : ''}>
+                  {/* TODO://要抓到最低價錢 */}
+                  {tour.length === 0 ? '' : '$' + tour[0].price}
+                  <span className={tour.length > 0 ? 'dark' : ''}>
+                    {tour.length > 1 ? '起' : ''}
+                  </span>
                 </span>
               </div>
             )
