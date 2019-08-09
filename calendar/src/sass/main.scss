@@ -25,6 +25,9 @@ $monthBg: #ede9dd;
 .d-flex {
   display: flex;
 }
+.d-none {
+  display: none;
+}
 .wrapper {
   width: $screen-lg-desktop;
   .calender {
@@ -47,11 +50,17 @@ $monthBg: #ede9dd;
         }
       }
       .dateContent {
-        flex-wrap: wrap;
-        .itinerary {
-          height: 50px;
-          width: calc((1 / 7) * 100%);
-          background: blue;
+        .itineraryBox {
+          flex-wrap: wrap;
+          .itinerary {
+            height: 50px;
+            width: calc((1 / 7) * 100%);
+            background: blue;
+          }
+          .pageArea {
+            height: 50px;
+            width: 100%;
+          }
         }
         .itineraryStraight {
           width: 100%;

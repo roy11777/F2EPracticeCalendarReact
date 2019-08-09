@@ -20,6 +20,10 @@
   display: flex;
 }
 
+.d-none {
+  display: none;
+}
+
 .wrapper {
   width: 1280px;
 }
@@ -47,15 +51,20 @@
   text-align: center;
 }
 
-.wrapper .calender .calendarMain .dateContent {
+.wrapper .calender .calendarMain .dateContent .itineraryBox {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
 
-.wrapper .calender .calendarMain .dateContent .itinerary {
+.wrapper .calender .calendarMain .dateContent .itineraryBox .itinerary {
   height: 50px;
   width: calc((1 / 7) * 100%);
   background: blue;
+}
+
+.wrapper .calender .calendarMain .dateContent .itineraryBox .pageArea {
+  height: 50px;
+  width: 100%;
 }
 
 .wrapper .calender .calendarMain .dateContent .itineraryStraight {

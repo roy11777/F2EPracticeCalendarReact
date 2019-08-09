@@ -16,10 +16,14 @@ class Mainpage extends React.Component {
       CurrentDataPart: [],
       dataSource: '/data/data1.json',
       initYearMonth: 201807,
+      //   預設顯示月曆還是列表
+      switch: false,
     }
     // this.handleMonthContent = this.handleMonthContent.bind(this)
     // this.dataInput = React.createRef()
     // this.prevMonth = this.prevMonth.bind(this)
+    this.rowData = React.createRef()
+    this.straightData = React.createRef()
   }
 
   async componentDidMount() {
@@ -118,12 +122,8 @@ class Mainpage extends React.Component {
         .add(-1, 'months')
         .format('YYYYMM')
     )
-    // console.log(this.dataInput.current.props.Package.CurrentData)
-    // const newdata = this.dataInput.current.props.Package.CurrentData
-    // console.log(jsonData)
-    // const nowMonth = this.state.currentMonth
+
     await this.setState({ initYearMonth: newyearDate })
-    // console.log(this.state.initYearMonth)
     // // 將fetch出資料在onclick時傳入內容產生function
     await this.handleMonthContent(this.state.fetchData)
   }
@@ -137,18 +137,30 @@ class Mainpage extends React.Component {
     await this.setState({ initYearMonth: newyearDate })
     await this.handleMonthContent(this.state.fetchData)
   }
-  monthswitchLeft = async () => {
-    // await this.setState({ currentMonth: nowMonth - 1 })
-    // console.log(e.target)
-    this.prevMonth()
-  }
-  monthswitchRight = () => {
-    // console.log(e.target)
-    this.nextMonth()
-  }
-  monthswitchMiddle = async () => {
-    // console.log(e.target)
-    await this.handleMonthContent(this.state.fetchData)
+  //   monthswitchLeft = async () => {
+  //     // await this.setState({ currentMonth: nowMonth - 1 })
+  //     // console.log(e.target)
+  //     this.prevMonth()
+  //   }
+  //   monthswitchRight = () => {
+  //     // console.log(e.target)
+  //     this.nextMonth()
+  //   }
+  //   monthswitchMiddle = async () => {
+  //     // console.log(e.target)
+  //     await this.handleMonthContent(this.state.fetchData)
+  //   }
+
+  handleSwitch = () => {
+    if (this.state.switch) {
+      this.straightData.current.classList.add('d-none')
+      this.rowData.current.classList.remove('d-none')
+    } else {
+      this.straightData.current.classList.remove('d-none')
+      this.rowData.current.classList.add('d-none')
+    }
+    this.setState({ switch: !this.state.switch })
+    console.log('123')
   }
 
   render() {
@@ -184,7 +196,7 @@ class Mainpage extends React.Component {
     console.log(Package.dataSource)
     return (
       <>
-        <button>切換</button>
+        <button onClick={this.handleSwitch}>切換</button>
         <button onClick={this.prevMonth}>左</button>
         <button onClick={this.nextMonth}>右</button>
         <div className="wrapper">
@@ -206,8 +218,13 @@ class Mainpage extends React.Component {
                 <div>星期五</div>
                 <div>星期六</div>
               </div>
-              <div className="dateContent d-flex ">
-                <DateContainer Package={Package} />
+              <div className="dateContent  ">
+                <DateContainer
+                  Package={Package}
+                  //設ref訪問子層元素，先在父層construct createRef，props下去子層再設ref接
+                  straightData={this.straightData}
+                  rowData={this.rowData}
+                />
                 {/* <DateContainer Package={Package} ref={this.dataInput} /> */}
               </div>
             </div>
