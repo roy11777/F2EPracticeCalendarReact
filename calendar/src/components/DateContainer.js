@@ -6,10 +6,10 @@ class DateContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      perPage: 7,
-      nowPage: 1,
+      perPage: 8,
+      nowPage: 3,
     }
-    this.straightDataShow = React.createRef()
+    // this.straightDataShow = React.createRef()
   }
 
   async componentDidMount() {
@@ -33,31 +33,18 @@ class DateContainer extends React.Component {
           price: jsonObject[i][settingObj.price],
         }
         parseData.push(obj)
-        // console.log(
-        //   moment(obj.date, 'YYYY/MM/DD')
-        //     .locale('zh-tw')
-        //     .day()
-        // )
       }
       //   設state方便提用傳入內容產生function
       //   await this.setState({ fetchData: jsonObject })
       //   console.log(parseData)
       await this.props.Package.method(parseData)
+      await this.props.Package.methodstraight()
     } catch (e) {
       console.log(e)
     }
-    const perPage = this.state.perPage
-    const nowPage = this.state.nowPage
-    // console.log(this.state.perPage)
-    const allElement = this.straightDataShow.current.childNodes
-    const pages = Math.ceil(allElement.length / perPage)
-    console.log(pages)
-    console.log(allElement)
-    for (let i = 0; i < perPage; i++) {
-      allElement[i].classList.remove('d-none')
-      console.log(allElement[i])
-    }
+    // 初始化列表顯示內容
   }
+
   // TODO:改掉切換顯示內容渲染的頁面
   handlePrevPage = () => {
     const perPage = this.state.perPage
@@ -92,6 +79,7 @@ class DateContainer extends React.Component {
     return (
       <>
         {/* TODO:border設定 */}
+        {/* 日歷模式 */}
         <div ref={this.props.rowData}>
           <div className="weekday list-unstyle d-flex jusifyCenter alignCenter">
             <div>星期日</div>
@@ -105,7 +93,7 @@ class DateContainer extends React.Component {
           <div className="d-flex itineraryBox">
             {this.props.Package.CurrentData.map(function(ele, index) {
               const tour = ele.matchTour
-              console.log(ele)
+              //   console.log(ele)
               return (
                 <div
                   key={index + +new Date()}
@@ -190,55 +178,58 @@ class DateContainer extends React.Component {
             })}
           </div>
         </div>
+        {/* 列表模式 */}
         <div className="d-none" ref={this.props.straightData}>
-          <div ref={this.straightDataShow}>
+          <div ref={this.props.straightDataShow}>
             {this.props.Package.CurrentDataPart.map(function(e, index) {
               //   moment.locale('zh-tw')
               //   console.log(moment(e.date, 'YYYY/MM/DD').weekdays(0))
               return (
                 <div
                   key={index + +new Date()}
-                  className="itineraryStraight d-flex"
+                  className="itineraryStraight d-none"
                 >
-                  <div className="date dark  d-flex alignCenter">
-                    <span>{moment(e.date, 'YYYY/MM/DD').get('date')}</span>
-                    {/* TODO:星期幾 */}
-                    <span>
-                      {'星期' + moment(e.date, 'YYYY/MM/DD').weekday()}
-                    </span>
-                  </div>
-                  <div className="detail d-flex jusifyCenter">
-                    <div>
-                      <span className="dark">{'可賣:' + e.available}</span>
-                      <span className="dark">{'團位:' + e.total}</span>
-                    </div>
-                    <div>
-                      <span className={e.guaranteed ? 'ready' : ''}>
-                        {e.guaranteed ? '成團' : ''}
+                  <div className="d-flex">
+                    <div className="date dark  d-flex alignCenter">
+                      <span>{moment(e.date, 'YYYY/MM/DD').get('date')}</span>
+                      {/* TODO:星期幾 */}
+                      <span>
+                        {'星期' + moment(e.date, 'YYYY/MM/DD').weekday()}
                       </span>
                     </div>
-                  </div>
-                  <div className="priceStatus d-flex jusifyCenter">
-                    <span
-                      className={
-                        e.length === 0
-                          ? ''
-                          : e.length > 1
-                          ? 'blue'
-                          : e.status === '報名'
-                          ? 'org'
-                          : e.status === '預定'
-                          ? 'org'
-                          : e.status === '後補'
-                          ? 'lightg'
-                          : e.status === '請洽專員'
-                          ? 'lightg'
-                          : 'gray'
-                      }
-                    >
-                      {e.status}
-                    </span>
-                    <span className="red">{'$' + e.price}</span>
+                    <div className="detail d-flex jusifyCenter">
+                      <div>
+                        <span className="dark">{'可賣:' + e.available}</span>
+                        <span className="dark">{'團位:' + e.total}</span>
+                      </div>
+                      <div>
+                        <span className={e.guaranteed ? 'ready' : ''}>
+                          {e.guaranteed ? '成團' : ''}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="priceStatus d-flex jusifyCenter">
+                      <span
+                        className={
+                          e.length === 0
+                            ? ''
+                            : e.length > 1
+                            ? 'blue'
+                            : e.status === '報名'
+                            ? 'org'
+                            : e.status === '預定'
+                            ? 'org'
+                            : e.status === '後補'
+                            ? 'lightg'
+                            : e.status === '請洽專員'
+                            ? 'lightg'
+                            : 'gray'
+                        }
+                      >
+                        {e.status}
+                      </span>
+                      <span className="red">{'$' + e.price}</span>
+                    </div>
                   </div>
                 </div>
               )

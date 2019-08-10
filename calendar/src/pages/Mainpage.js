@@ -23,7 +23,10 @@ class Mainpage extends React.Component {
     // this.dataInput = React.createRef()
     // this.prevMonth = this.prevMonth.bind(this)
     this.rowData = React.createRef()
+    // 整個列表資訊區塊
     this.straightData = React.createRef()
+    // 個別列表資訊區塊
+    this.straightDataShow = React.createRef()
   }
 
   async componentDidMount() {
@@ -56,7 +59,7 @@ class Mainpage extends React.Component {
     const nowMonthAlltour = await jsonData.filter(
       item => item.date.indexOf(moment(init, 'YYYYMM').format('YYYY/MM')) !== -1
     )
-    // 深層複製一個用來排序的資料
+    // 深層複製一個用來列表模式排序的資料
     const cloneObj = Object.assign(jsonData)
     // console.log(nowMonthAlltour)
 
@@ -66,10 +69,10 @@ class Mainpage extends React.Component {
       item => item.date.indexOf(moment(init, 'YYYYMM').format('YYYY/MM')) !== -1
     )
     AllNewObj.sort(function(a, b) {
-      console.log(moment(a.date, 'YYYY/MM/DD').milliseconds())
+      //   console.log(moment(a.date, 'YYYY/MM/DD').milliseconds())
       return moment(a.date, 'YYYY/MM/DD') - moment(b.date, 'YYYY/MM/DD')
     })
-    console.log(AllNewObj)
+    // console.log(AllNewObj)
 
     // 產生月曆並將符合對應日子行程整合--------------------------------------
     for (let i = 0; i < 42; i++) {
@@ -115,7 +118,29 @@ class Mainpage extends React.Component {
     console.log(this.state.CurrentDataPart)
   }
 
-  prevMonth = async jsonData => {
+  //   列表顯示內容
+  handleStraightPages = () => {
+    const perPage = 8
+    const nowPage = 3
+    // const perPage = this.state.perPage
+    // const nowPage = this.state.nowPage
+    // ref allElement
+    const allElement = this.straightDataShow.current.childNodes
+    const max = allElement.length
+    const pages = Math.ceil(allElement.length / perPage)
+    // 超過最大比數自動選擇最後一頁顯示
+    if (nowPage * perPage > max) {
+      for (let i = (pages - 1) * perPage; i < max; i++) {
+        allElement[i].classList.remove('d-none')
+      }
+    } else {
+      for (let i = (nowPage - 1) * perPage; i < nowPage * perPage; i++) {
+        allElement[i].classList.remove('d-none')
+      }
+    }
+  }
+
+  prevMonth = async () => {
     const init = this.state.initYearMonth
     const newyearDate = Number(
       moment(init, 'YYYYMM')
@@ -126,6 +151,7 @@ class Mainpage extends React.Component {
     await this.setState({ initYearMonth: newyearDate })
     // // 將fetch出資料在onclick時傳入內容產生function
     await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
   }
   nextMonth = async () => {
     const init = this.state.initYearMonth
@@ -136,6 +162,7 @@ class Mainpage extends React.Component {
     )
     await this.setState({ initYearMonth: newyearDate })
     await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
   }
   //   monthswitchLeft = async () => {
   //     // await this.setState({ currentMonth: nowMonth - 1 })
@@ -151,15 +178,18 @@ class Mainpage extends React.Component {
   //     await this.handleMonthContent(this.state.fetchData)
   //   }
 
+  //   切換列表
   handleSwitch = () => {
-    if (this.state.switch) {
-      this.straightData.current.classList.add('d-none')
-      this.rowData.current.classList.remove('d-none')
-    } else {
+    const status = this.straightData.current.classList.contains('d-none')
+    console.log(status)
+    if (status) {
       this.straightData.current.classList.remove('d-none')
       this.rowData.current.classList.add('d-none')
+    } else {
+      this.straightData.current.classList.add('d-none')
+      this.rowData.current.classList.remove('d-none')
     }
-    this.setState({ switch: !this.state.switch })
+    // this.setState({ switch: !this.state.switch })
     console.log('123')
   }
 
@@ -180,6 +210,7 @@ class Mainpage extends React.Component {
       dataSource: this.state.dataSource,
       initYearMonth: this.state.initYearMonth,
       method: this.handleMonthContent,
+      methodstraight: this.handleStraightPages,
       dataKeySetting: {
         // 保證出團
         guaranteed: 'guaranteed',
@@ -193,7 +224,7 @@ class Mainpage extends React.Component {
         price: 'price',
       },
     }
-    console.log(Package.dataSource)
+    // console.log(Package.dataSource)
     return (
       <>
         <div className="wrapper">
@@ -216,6 +247,7 @@ class Mainpage extends React.Component {
                     //設ref訪問子層元素，先在父層construct createRef，props下去子層再設ref接
                     straightData={this.straightData}
                     rowData={this.rowData}
+                    straightDataShow={this.straightDataShow}
                   />
                   {/* <DateContainer Package={Package} ref={this.dataInput} /> */}
                 </div>
