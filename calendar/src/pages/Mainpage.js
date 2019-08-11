@@ -144,18 +144,15 @@ class Mainpage extends React.Component {
     await this.handleMonthContent(this.state.fetchData)
     await this.handleStraightPages()
   }
-  //   monthswitchLeft = async () => {
-  //     // await this.setState({ currentMonth: nowMonth - 1 })
-  //     // console.log(e.target)
-  //     this.prevMonth()
-  //   }
-  //   monthswitchRight = () => {
-  //     // console.log(e.target)
-  //     this.nextMonth()
-  //   }
+  monthswitchLeft = async () => {
+    this.prevMonth()
+  }
+  monthswitchRight = () => {
+    this.nextMonth()
+  }
   //   monthswitchMiddle = async () => {
   //     // console.log(e.target)
-  //     await this.handleMonthContent(this.state.fetchData)
+  //     this.nextMonth()
   //   }
 
   //   列表顯示內容
@@ -227,13 +224,13 @@ class Mainpage extends React.Component {
   }
 
   render() {
-    const prevMonth = moment(this.state.initYearMonth, 'YYYYMM')
+    const leftMonth = moment(this.state.initYearMonth, 'YYYYMM')
       .add(-1, 'month')
       .format('YYYY  M月')
-    const nowwMonth = moment(this.state.initYearMonth, 'YYYYMM').format(
+    const middleMonth = moment(this.state.initYearMonth, 'YYYYMM').format(
       'YYYY  M月'
     )
-    const nextMonth = moment(this.state.initYearMonth, 'YYYYMM')
+    const rightMonth = moment(this.state.initYearMonth, 'YYYYMM')
       .add(1, 'month')
       .format('YYYY  M月')
 
@@ -277,9 +274,15 @@ class Mainpage extends React.Component {
               <div className="monthYears">
                 <div className="list-unstyle d-flex alignCenter">
                   <div onClick={this.prevMonth}>左</div>
-                  <YearMonthLeft prevMonth={prevMonth} />
-                  <YearMonthMiddle nowwMonth={nowwMonth} />
-                  <YearMonthRight nextMonth={nextMonth} />
+                  <YearMonthLeft
+                    monthswitchLeft={this.monthswitchLeft}
+                    leftMonth={leftMonth}
+                  />
+                  <YearMonthMiddle middleMonth={middleMonth} />
+                  <YearMonthRight
+                    monthswitchRight={this.monthswitchRight}
+                    rightMonth={rightMonth}
+                  />
                   <div onClick={this.nextMonth}>右</div>
                 </div>
               </div>

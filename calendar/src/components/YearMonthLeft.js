@@ -11,10 +11,10 @@ class YearMonthLeft extends React.Component {
     return (
       <>
         <div
-          onClick={this.monthswitchLeft}
+          onClick={this.props.monthswitchLeft}
           className="d-flex jusifyCenter alignCenter"
         >
-          <span> {this.props.prevMonth}</span>
+          <span> {this.props.leftMonth}</span>
         </div>
       </>
     )
