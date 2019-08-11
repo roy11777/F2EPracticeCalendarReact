@@ -18,6 +18,8 @@ class Mainpage extends React.Component {
       initYearMonth: 201807,
       //   預設顯示月曆還是列表
       switch: false,
+      perPage: 8,
+      nowPage: 3,
     }
     // this.handleMonthContent = this.handleMonthContent.bind(this)
     // this.dataInput = React.createRef()
@@ -118,28 +120,6 @@ class Mainpage extends React.Component {
     console.log(this.state.CurrentDataPart)
   }
 
-  //   列表顯示內容
-  handleStraightPages = () => {
-    const perPage = 8
-    const nowPage = 3
-    // const perPage = this.state.perPage
-    // const nowPage = this.state.nowPage
-    // ref allElement
-    const allElement = this.straightDataShow.current.childNodes
-    const max = allElement.length
-    const pages = Math.ceil(allElement.length / perPage)
-    // 超過最大比數自動選擇最後一頁顯示
-    if (nowPage * perPage > max) {
-      for (let i = (pages - 1) * perPage; i < max; i++) {
-        allElement[i].classList.remove('d-none')
-      }
-    } else {
-      for (let i = (nowPage - 1) * perPage; i < nowPage * perPage; i++) {
-        allElement[i].classList.remove('d-none')
-      }
-    }
-  }
-
   prevMonth = async () => {
     const init = this.state.initYearMonth
     const newyearDate = Number(
@@ -178,6 +158,59 @@ class Mainpage extends React.Component {
   //     await this.handleMonthContent(this.state.fetchData)
   //   }
 
+  //   列表顯示內容
+  handleStraightPages = (x, y) => {
+    // const perPage = x
+    // const nowPage = y
+    const perPage = this.state.perPage
+    const nowPage = this.state.nowPage
+    // ref allElement
+    const allElement = this.straightDataShow.current.childNodes
+    const max = allElement.length
+    const pages = Math.ceil(allElement.length / perPage)
+    // 超過最大比數自動選擇最後一頁顯示
+    if (max > 0) {
+      if (nowPage * perPage > max) {
+        this.setState({ nowPage: pages })
+        for (let i = (pages - 1) * perPage; i < max; i++) {
+          allElement[i].classList.remove('d-none')
+        }
+      } else {
+        for (let i = (nowPage - 1) * perPage; i < nowPage * perPage; i++) {
+          allElement[i].classList.remove('d-none')
+        }
+      }
+    } else {
+      // 沒資料顯示第一頁
+      this.setState({ nowPage: 1 })
+    }
+  }
+
+  // TODO:改掉切換顯示內容渲染的頁面
+  handlePrevPage = async () => {
+    const perPage = this.state.perPage
+    const nowPage = this.state.nowPage
+    console.log(nowPage)
+    if (nowPage > 1) {
+      await this.setState({ nowPage: nowPage - 1 })
+      await this.handleMonthContent(this.state.fetchData)
+      await this.handleStraightPages(perPage, nowPage)
+    }
+  }
+  // TODO:改掉切換顯示內容渲染的頁面
+  handleNextPage = async () => {
+    const perPage = this.state.perPage
+    const nowPage = this.state.nowPage
+    const allElement = this.straightDataShow.current.childNodes
+    const pages = Math.ceil(allElement.length / perPage)
+    console.log(nowPage)
+    if (nowPage < pages) {
+      await this.setState({ nowPage: nowPage + 1 })
+      await this.handleMonthContent(this.state.fetchData)
+      await this.handleStraightPages(perPage, nowPage)
+    }
+  }
+
   //   切換列表
   handleSwitch = () => {
     const status = this.straightData.current.classList.contains('d-none')
@@ -203,7 +236,11 @@ class Mainpage extends React.Component {
     const nextMonth = moment(this.state.initYearMonth, 'YYYYMM')
       .add(1, 'month')
       .format('YYYY  M月')
-    // const dataSource = this.state.fetchData
+
+    // 計算總頁數
+    const perPage = this.state.perPage
+    const allElement = this.state.CurrentDataPart
+    const pages = Math.ceil(allElement.length / perPage)
     const Package = {
       CurrentDataPart: this.state.CurrentDataPart,
       CurrentData: this.state.CurrentData,
@@ -211,6 +248,12 @@ class Mainpage extends React.Component {
       initYearMonth: this.state.initYearMonth,
       method: this.handleMonthContent,
       methodstraight: this.handleStraightPages,
+      handlePrevPage: this.handlePrevPage,
+      handleNextPage: this.handleNextPage,
+      nowPage: this.state.nowPage,
+      perPage: this.state.perPage,
+      //   如果沒有資料顯示第1頁
+      totalPages: pages === 0 ? '1' : pages,
       dataKeySetting: {
         // 保證出團
         guaranteed: 'guaranteed',

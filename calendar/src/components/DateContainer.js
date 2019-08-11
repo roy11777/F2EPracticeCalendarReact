@@ -5,11 +5,7 @@ import moment from 'moment'
 class DateContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      perPage: 8,
-      nowPage: 3,
-    }
-    // this.straightDataShow = React.createRef()
+    this.state = {}
   }
 
   async componentDidMount() {
@@ -45,37 +41,11 @@ class DateContainer extends React.Component {
     // 初始化列表顯示內容
   }
 
-  // TODO:改掉切換顯示內容渲染的頁面
-  handlePrevPage = () => {
-    const perPage = this.state.perPage
-    const nowPage = this.state.nowPage
-    const allElement = this.straightDataShow.current.childNodes
-    if (nowPage > 1) {
-      console.log('1123')
-      console.log(allElement)
-      for (let i = 0; i < allElement.length; i++) {
-        allElement[i].classList.add('d-none')
-      }
-    }
-  }
-  // TODO:改掉切換顯示內容渲染的頁面
-  handleNextPage = async () => {
-    const perPage = this.state.perPage
-    const nowPage = this.state.nowPage
-    // console.log(this.state.perPage)
-    if (nowPage < perPage) {
-      const allElement = this.straightDataShow.current.childNodes
-      const pages = Math.ceil(allElement.length / perPage)
-      console.log(pages)
-      console.log(allElement)
-      for (let i = perPage * nowPage; i < perPage * nowPage + perPage; i++) {
-        allElement[i].classList.add('d-none')
-      }
-    }
-  }
   render() {
     console.log(this.props.Package.CurrentData)
-    console.log(this.props.Package.CurrentDataPart)
+    console.log(this.props.Package)
+    // 顯示總頁數
+
     return (
       <>
         {/* TODO:border設定 */}
@@ -236,9 +206,11 @@ class DateContainer extends React.Component {
             })}
           </div>
           <div className="pageArea d-flex">
-            <button onClick={this.handlePrevPage}>上一頁</button>
-            <div>第幾頁</div>
-            <button onClick={this.handleNextPage}>下一頁</button>
+            <button onClick={this.props.Package.handlePrevPage}>上一頁</button>
+            <div>
+              {this.props.Package.nowPage + '/' + this.props.Package.totalPages}
+            </div>
+            <button onClick={this.props.Package.handleNextPage}>下一頁</button>
           </div>
         </div>
       </>
