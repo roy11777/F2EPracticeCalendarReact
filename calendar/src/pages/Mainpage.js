@@ -1,9 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import DateContainer from '../components/DateContainer'
-import YearMonthLeft from '../components/YearMonthLeft'
-import YearMonthMiddle from '../components/YearMonthMiddle'
-import YearMonthRight from '../components/YearMonthRight'
+import MonthTab from '../components/MonthTab'
 
 class Mainpage extends React.Component {
   constructor() {
@@ -224,15 +222,11 @@ class Mainpage extends React.Component {
   }
 
   render() {
-    const leftMonth = moment(this.state.initYearMonth, 'YYYYMM')
-      .add(-1, 'month')
-      .format('YYYY  M月')
-    const middleMonth = moment(this.state.initYearMonth, 'YYYYMM').format(
-      'YYYY  M月'
-    )
-    const rightMonth = moment(this.state.initYearMonth, 'YYYYMM')
-      .add(1, 'month')
-      .format('YYYY  M月')
+    const MonthTabPack = {
+      monthswitchLeft: this.monthswitchLeft,
+      monthswitchRight: this.monthswitchRight,
+      initYearMonth: this.state.initYearMonth,
+    }
 
     // 計算總頁數
     const perPage = this.state.perPage
@@ -274,15 +268,7 @@ class Mainpage extends React.Component {
               <div className="monthYears">
                 <div className="list-unstyle d-flex alignCenter">
                   <div onClick={this.prevMonth}>左</div>
-                  <YearMonthLeft
-                    monthswitchLeft={this.monthswitchLeft}
-                    leftMonth={leftMonth}
-                  />
-                  <YearMonthMiddle middleMonth={middleMonth} />
-                  <YearMonthRight
-                    monthswitchRight={this.monthswitchRight}
-                    rightMonth={rightMonth}
-                  />
+                  <MonthTab MonthTabPack={MonthTabPack} />
                   <div onClick={this.nextMonth}>右</div>
                 </div>
               </div>

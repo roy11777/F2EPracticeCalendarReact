@@ -11,7 +11,6 @@ class DateContainer extends React.Component {
   async componentDidMount() {
     try {
       //   const api = JSON.stringify(this.props.Package.dataSource)
-      //   console.log(this.props.Package)
       //   TODO:直接fetch array
       const response = await fetch(this.props.Package.dataSource)
       const jsonObject = await response.json()
@@ -35,6 +34,7 @@ class DateContainer extends React.Component {
       //   console.log(parseData)
       await this.props.Package.method(parseData)
       await this.props.Package.methodstraight()
+      console.log(this.props.Package.CurrentData)
     } catch (e) {
       console.log(e)
     }
