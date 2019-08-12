@@ -68,8 +68,8 @@ class DateContainer extends React.Component {
                 <div
                   key={index + +new Date()}
                   className={
-                    (ele.calendarDate === '' ? 'disable' : '') +
-                    ' jusifyCenter alignCenter itinerary'
+                    (ele.calendarDate === '' ? 'disable' : 'active') +
+                    ' jusifyCenter alignCenter itinerary '
                   }
                 >
                   <span
@@ -149,15 +149,18 @@ class DateContainer extends React.Component {
           </div>
         </div>
         {/* 列表模式 */}
-        <div className="d-none" ref={this.props.straightData}>
-          <div ref={this.props.straightDataShow}>
+        <div className="straightContainer d-none" ref={this.props.straightData}>
+          <div
+            className="itineraryStraightBox d-flex"
+            ref={this.props.straightDataShow}
+          >
             {this.props.Package.CurrentDataPart.map(function(e, index) {
               //   moment.locale('zh-tw')
               //   console.log(moment(e.date, 'YYYY/MM/DD').weekdays(0))
               return (
                 <div
                   key={index + +new Date()}
-                  className="itineraryStraight d-none"
+                  className="itineraryStraight d-none active"
                 >
                   <div className="d-flex">
                     <div className="date dark  d-flex alignCenter">
@@ -206,11 +209,25 @@ class DateContainer extends React.Component {
             })}
           </div>
           <div className="pageArea d-flex">
-            <button onClick={this.props.Package.handlePrevPage}>上一頁</button>
-            <div>
-              {this.props.Package.nowPage + '/' + this.props.Package.totalPages}
+            <div
+              className="pageBtnStraight "
+              onClick={this.props.Package.handlePrevPage}
+            >
+              <span className="left"></span>
+              上一頁
             </div>
-            <button onClick={this.props.Package.handleNextPage}>下一頁</button>
+            <div>
+              {this.props.Package.nowPage +
+                '/ ' +
+                this.props.Package.totalPages}
+            </div>
+            <div
+              className="pageBtnStraight "
+              onClick={this.props.Package.handleNextPage}
+            >
+              下一頁
+              <span className="right"></span>
+            </div>
           </div>
         </div>
       </>

@@ -262,15 +262,17 @@ class Mainpage extends React.Component {
     return (
       <>
         <div className="wrapper">
+          <button className="switchBtn" onClick={this.handleSwitch}>
+            切換
+          </button>
           <div className="container">
             <div className="calender">
-              <button onClick={this.handleSwitch}>切換</button>
-              <div className="monthYears">
-                <div className="list-unstyle d-flex alignCenter">
-                  <div onClick={this.prevMonth}>左</div>
-                  <MonthTab MonthTabPack={MonthTabPack} />
-                  <div onClick={this.nextMonth}>右</div>
+              <div className="monthYears d-flex alignCenter">
+                <div className="pageBtn prev" onClick={this.prevMonth}></div>
+                <div className="monthTab d-flex">
+                  <MonthTab className="" MonthTabPack={MonthTabPack} />
                 </div>
+                <div className="pageBtn next" onClick={this.nextMonth}></div>
               </div>
               <div className="calendarMain">
                 <div className="dateContent  ">
