@@ -9,8 +9,25 @@ $screen-desktop-max: 1279px;
 
 $screen-lg-desktop-wrapper: 890px;
 $screen-desktop-wrapper: 710px;
+$font-table-family: '微軟正黑體', 'Arial, Helvetica, sans-serif';
+
 $calendarWidth: 50%;
 $monthBg: #ede9dd;
+$body-bg: #f8f8f8;
+$font-size-weekday: 0.85rem;
+// 月曆版字體大小
+$font-size-info: 0.75rem;
+// 直版中間字體大小
+$font-size-straigt: 0.85rem;
+
+$tourInfo-border-color: #eeeeee;
+// stutus Color
+$tourInfo-color-lightg: #24a07c; // 候補 請洽專員
+$tourInfo-color-org: #ff7800; //報名// 預定
+$tourInfo-color-gray: #999; // 關團 //額滿 // 截止
+$tourInfo-color-dark: #666; //餐團數量
+$tourInfo-color-red: #e10500; // // 價錢
+$tourInfo-color-blue: #0077b3; // 多團
 
 .list-unstyle {
   list-style: none;
@@ -25,32 +42,160 @@ $monthBg: #ede9dd;
 .d-flex {
   display: flex;
 }
+.d-none {
+  display: none;
+}
+body {
+  background: $body-bg;
+  font-family: $font-table-family;
+}
+.blue {
+  color: $tourInfo-color-blue;
+}
+.lightg {
+  color: $tourInfo-color-lightg;
+}
+.org {
+  color: $tourInfo-color-org;
+}
+.gray {
+  color: $tourInfo-color-gray;
+}
+.dark {
+  color: $tourInfo-color-dark;
+}
 .wrapper {
   width: $screen-lg-desktop;
-  .calender {
-    width: $calendarWidth;
+  margin: 0 auto;
+  .container {
+    width: 50%;
+    min-height: 400px;
+    padding: 12px;
     margin: 0 auto;
-    .monthYears {
-      div {
-        flex-grow: 1;
-        background: #ede9dd;
-        cursor: pointer;
-        text-align: center;
-      }
-    }
-    .calendarMain {
-      .weekday {
-        background: yellow;
+    border: 2px solid #86cacb;
+    background: #fff;
+
+    .calender {
+      width: 100%;
+
+      .monthYears {
         div {
-          width: calc((1 / 7) * 100%);
+          flex-grow: 1;
+          background: #ede9dd;
+          cursor: pointer;
           text-align: center;
+          height: 50px;
+          color: $tourInfo-color-dark;
         }
       }
-      .dateContent {
-        flex-wrap: wrap;
-        .itinerary {
-          width: calc((1 / 7) * 100%);
-          background: blue;
+      .calendarMain {
+        .dateContent {
+          .weekday {
+            background: transparent;
+            border: 1px solid $tourInfo-border-color;
+            font-size: $font-size-weekday;
+            font-weight: 600;
+            color: $tourInfo-color-dark;
+            padding: 6px 0;
+            div {
+              width: calc((1 / 7) * 100%);
+              text-align: center;
+            }
+          }
+          background: transparent;
+          .itineraryBox {
+            flex-wrap: wrap;
+            border-left: 1px solid $tourInfo-border-color;
+            .disable {
+              background: $body-bg;
+              border: none !important;
+            }
+            .itinerary {
+              border: 1px solid $tourInfo-border-color;
+              border-collapse: collapse;
+              border-spacing: 0;
+              border-top: none;
+              border-left: none;
+              position: relative;
+              box-sizing: border-box;
+              height: 85px;
+              width: calc((1 / 7) * 100%);
+              // 成團區塊
+              .readytogo {
+                position: absolute;
+                right: 2px;
+                top: 2px;
+                background: #ff7800;
+                color: #fff;
+                padding: 2px 8px;
+              }
+              .mutiTour {
+                margin-bottom: 1rem;
+              }
+
+              .red {
+                color: $tourInfo-color-red;
+                span {
+                  display: inline;
+                }
+              }
+              // 日期F
+              :nth-child(2) {
+                padding: 2px;
+              }
+              span {
+                font-size: $font-size-info;
+                display: block;
+              }
+            }
+            .pageArea {
+              height: 50px;
+              width: 100%;
+            }
+          }
+          .itineraryStraight {
+            width: 100%;
+            height: 60px;
+            box-sizing: border-box;
+            border: 1px solid $tourInfo-border-color;
+            border-top: none !important;
+            .date {
+              width: 10%;
+              flex-direction: column;
+              :first-child {
+                font-size: 1.5rem;
+              }
+            }
+            .detail {
+              width: 65%;
+              font-size: $font-size-straigt;
+              flex-direction: column;
+
+              .ready {
+                background: #ff7800;
+                color: #fff;
+                padding: 1px 4px;
+                border-radius: 4px;
+              }
+              div {
+                padding: 5px 0;
+                span {
+                  margin-right: 20px;
+                }
+              }
+            }
+            .priceStatus {
+              width: 25%;
+              flex-direction: column;
+              align-items: flex-end;
+              span {
+                padding: 2px 5px;
+              }
+              .red {
+                color: $tourInfo-color-red;
+              }
+            }
+          }
         }
       }
     }
