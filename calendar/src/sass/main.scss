@@ -249,6 +249,15 @@ body {
           }
           .straightContainer {
             height: 542px;
+            position: relative;
+            .nodata {
+              position: absolute;
+              top: 20px;
+              width: 100%;
+              span {
+                margin: 0 auto;
+              }
+            }
             .itineraryStraightBox {
               height: 92%;
               flex-direction: column;

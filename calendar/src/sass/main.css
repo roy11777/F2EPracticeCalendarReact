@@ -266,6 +266,17 @@ body {
 
 .wrapper .container .calender .calendarMain .dateContent .straightContainer {
   height: 542px;
+  position: relative;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .nodata {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .nodata span {
+  margin: 0 auto;
 }
 
 .wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox {

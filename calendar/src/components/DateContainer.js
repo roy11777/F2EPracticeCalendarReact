@@ -151,6 +151,14 @@ class DateContainer extends React.Component {
         {/* 列表模式 */}
         <div className="straightContainer d-none" ref={this.props.straightData}>
           <div
+            className={
+              'd-flex nodata ' +
+              (this.props.Package.CurrentDataPart.length === 0 ? '' : 'd-none')
+            }
+          >
+            <span>本月無出發行程</span>
+          </div>
+          <div
             className="itineraryStraightBox d-flex"
             ref={this.props.straightDataShow}
           >

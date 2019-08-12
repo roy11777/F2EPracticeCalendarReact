@@ -16,7 +16,7 @@ class Mainpage extends React.Component {
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
-      dataSource: '/data/data1.json',
+      dataSource: '/data/data1try.json',
       initYearMonth: 201708,
       //   預設顯示月曆還是列表
       switch: false,
