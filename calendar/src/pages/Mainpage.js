@@ -16,7 +16,7 @@ class Mainpage extends React.Component {
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
-      dataSource: '/data/data1try.json',
+      dataSource: '/data/data1.json',
       initYearMonth: 201708,
       //   預設顯示月曆還是列表
       switch: false,
@@ -266,28 +266,35 @@ class Mainpage extends React.Component {
   }
 
   prevMonth = async () => {
+    const prevDataCheck = this.prevDataSearch()[0]
+    // console.log(prevDataCheck)
     const init = this.state.initYearMonth
-    const newyearDate = Number(
-      moment(init, 'YYYYMM')
-        .add(-1, 'months')
-        .format('YYYYMM')
-    )
+    if (prevDataCheck !== 0) {
+      const newyearDate = Number(
+        moment(init, 'YYYYMM')
+          .add(-1, 'months')
+          .format('YYYYMM')
+      )
 
-    await this.setState({ initYearMonth: newyearDate })
-    // // 將fetch出資料在onclick時傳入內容產生function
-    await this.handleMonthContent(this.state.fetchData)
-    await this.handleStraightPages()
+      await this.setState({ initYearMonth: newyearDate })
+      // // 將fetch出資料在onclick時傳入內容產生function
+      await this.handleMonthContent(this.state.fetchData)
+      await this.handleStraightPages()
+    }
   }
   nextMonth = async () => {
+    const nextDataCheck = this.nextDataSearch()[0]
     const init = this.state.initYearMonth
-    const newyearDate = Number(
-      moment(init, 'YYYYMM')
-        .add(1, 'months')
-        .format('YYYYMM')
-    )
-    await this.setState({ initYearMonth: newyearDate })
-    await this.handleMonthContent(this.state.fetchData)
-    await this.handleStraightPages()
+    if (nextDataCheck !== 0) {
+      const newyearDate = Number(
+        moment(init, 'YYYYMM')
+          .add(1, 'months')
+          .format('YYYYMM')
+      )
+      await this.setState({ initYearMonth: newyearDate })
+      await this.handleMonthContent(this.state.fetchData)
+      await this.handleStraightPages()
+    }
   }
   monthswitchLeft = async () => {
     this.prevMonth()
@@ -385,8 +392,6 @@ class Mainpage extends React.Component {
     const Package = {
       CurrentDataPart: this.state.CurrentDataPart,
       CurrentData: this.state.CurrentData,
-      dataSource: this.state.dataSource,
-      initYearMonth: this.state.initYearMonth,
       method: this.handleMonthContent,
       methodstraight: this.handleStraightPages,
       handlePrevPage: this.handlePrevPage,
@@ -396,6 +401,9 @@ class Mainpage extends React.Component {
       perPage: this.state.perPage,
       //   如果沒有資料顯示第1頁
       totalPages: pages === 0 ? '1' : pages,
+
+      dataSource: this.state.dataSource,
+      initYearMonth: this.state.initYearMonth,
       dataKeySetting: {
         // 保證出團
         guaranteed: 'guaranteed',
