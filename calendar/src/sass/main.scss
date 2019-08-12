@@ -96,8 +96,25 @@ body {
         }
         .monthTab {
           width: 90%;
+
           div {
-            flex-grow: 1;
+            width: 33%;
+          }
+          .mothTabBg {
+            position: relative;
+            .showmonth {
+              position: absolute;
+              z-index: 2;
+            }
+            .active {
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              top: 3px;
+              left: 0;
+              background: #fff;
+              z-index: 0;
+            }
           }
         }
         .pageBtn {
