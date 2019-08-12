@@ -22,7 +22,7 @@ class MonthTab extends React.Component {
     const rightMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
       .add(1, 'month')
       .format('YYYY  M月')
-    console.log(middleMonth)
+    // console.log(middleMonth)
     return (
       <>
         <div

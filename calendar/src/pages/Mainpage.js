@@ -16,8 +16,8 @@ class Mainpage extends React.Component {
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
-      dataSource: '/data/data1.json',
-      initYearMonth: 201705,
+      dataSource: '/data/data1try.json',
+      initYearMonth: 201708,
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
@@ -46,11 +46,96 @@ class Mainpage extends React.Component {
     // }
     // this.prevMonth()
   }
+
+  // 判斷當月是否沒資料
+  handleDataSearch = async () => {
+    const stateYear = this.state.initYearMonth
+    const fetchData = this.state.fetchData
+    const CurrentDataPart = this.state.CurrentDataPart
+    // console.log(CurrentDataPart)
+    if (CurrentDataPart.length === 0) {
+      let m = 0
+      let nextLength = 0
+      function nextDataSearch() {
+        for (m = 1; m < 24; m++) {
+          const next = fetchData.filter(
+            item =>
+              item.date.indexOf(
+                moment(stateYear, 'YYYYMM')
+                  .add(m, 'months')
+                  .format('YYYY/MM')
+              ) !== -1
+          )
+          if (next.length !== 0) {
+            // console.log(next.length)
+            nextLength = next.length
+            // m = m
+            return
+          }
+        }
+      }
+      let n = 0
+      let prevlength = 0
+      function prevDataSearch() {
+        for (n = 1; n < 24; n++) {
+          const prev = fetchData.filter(
+            item =>
+              item.date.indexOf(
+                moment(stateYear, 'YYYYMM')
+                  .add(-n, 'months')
+                  .format('YYYY/MM')
+              ) !== -1
+          )
+          if (prev.length !== 0) {
+            // console.log(prev.length)
+            prevlength = prev.length
+            return
+          }
+        }
+      }
+      prevDataSearch()
+      nextDataSearch()
+
+      if (m > n) {
+        this.setState({
+          initYearMonth: moment(stateYear, 'YYYYMM')
+            .add(-n, 'months')
+            .format('YYYY/MM'),
+        })
+      } else if (m < n) {
+        this.setState({
+          initYearMonth: moment(stateYear, 'YYYYMM')
+            .add(m, 'months')
+            .format('YYYY/MM'),
+        })
+      } else if ((m = n)) {
+        // 如果兩筆最近資料距離相同，則判斷哪邊的資料數最多，
+        // 如果資料數也相等，預設抓上個月
+        if (nextLength > prevlength) {
+          this.setState({
+            initYearMonth: moment(stateYear, 'YYYYMM')
+              .add(m, 'months')
+              .format('YYYY/MM'),
+          })
+        } else {
+          this.setState({
+            initYearMonth: moment(stateYear, 'YYYYMM')
+              .add(-n, 'months')
+              .format('YYYY/MM'),
+          })
+        }
+      }
+      // console.log(this.state.initYearMonth)
+      await this.handleMonthContent(this.state.fetchData)
+      await this.handleStraightPages()
+    }
+  }
+
   handleMonthContent = async jsonData => {
     // YYYYMM大小寫影響抓到傳入的日期或現在日期,大寫抓傳入
     const init = this.state.initYearMonth
 
-    console.log(jsonData)
+    // console.log(jsonData)
     // }
 
     // 存放每日日期與所有對應到行程
@@ -70,7 +155,7 @@ class Mainpage extends React.Component {
             .format('YYYY/MM')
         ) !== -1
     )
-    console.log(PrevMonthAlltour)
+    // console.log(PrevMonthAlltour)
     // 下個月所有資料
     const NextMonthAlltour = await jsonData.filter(
       item =>
@@ -80,7 +165,7 @@ class Mainpage extends React.Component {
             .format('YYYY/MM')
         ) !== -1
     )
-    console.log(NextMonthAlltour)
+    // console.log(NextMonthAlltour)
 
     // 當月總共所有行程，不分日期
     const nowMonthAlltour = await jsonData.filter(
@@ -116,7 +201,7 @@ class Mainpage extends React.Component {
       //   設定當月超出範圍不顯示資料
       let obj = {}
       if (i < monthStartWeekday) {
-        console.log(i)
+        // console.log(i)
         obj = { calendarDate: '', matchTour: [] }
         dateArray.push(obj)
       } else if (i >= monthStartWeekday + monthDays) {
@@ -144,7 +229,7 @@ class Mainpage extends React.Component {
       nextData: NextMonthAlltour,
     })
     // console.log(dateArray)
-    console.log(this.state.CurrentDataPart)
+    // console.log(this.state.CurrentDataPart)
   }
 
   prevMonth = async () => {
@@ -273,6 +358,7 @@ class Mainpage extends React.Component {
       methodstraight: this.handleStraightPages,
       handlePrevPage: this.handlePrevPage,
       handleNextPage: this.handleNextPage,
+      dataSearch: this.handleDataSearch,
       nowPage: this.state.nowPage,
       perPage: this.state.perPage,
       //   如果沒有資料顯示第1頁

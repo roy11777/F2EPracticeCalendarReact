@@ -29,12 +29,12 @@ class DateContainer extends React.Component {
         }
         parseData.push(obj)
       }
-      //   設state方便提用傳入內容產生function
-      //   await this.setState({ fetchData: jsonObject })
-      //   console.log(parseData)
+
       await this.props.Package.method(parseData)
       await this.props.Package.methodstraight()
-      console.log(this.props.Package.CurrentData)
+      // 如果當月沒資則觸發下列搜尋最近function
+      await this.props.Package.dataSearch()
+      // console.log(this.props.Package.initYearMonth)
     } catch (e) {
       console.log(e)
     }
@@ -42,8 +42,8 @@ class DateContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.Package.CurrentData)
-    console.log(this.props.Package)
+    // console.log(this.props.Package.CurrentData)
+    // console.log(this.props.Package)
     // 顯示總頁數
 
     return (
