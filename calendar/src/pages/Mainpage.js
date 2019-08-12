@@ -17,9 +17,7 @@ class Mainpage extends React.Component {
       //   當月全部資料，未整
       CurrentDataPart: [],
       dataSource: '/data/data1.json',
-      initYearMonth: moment(201705, 'YYYYMM')
-        .add(1, 'months')
-        .format('YYYYMM'),
+      initYearMonth: 201705,
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
@@ -46,7 +44,7 @@ class Mainpage extends React.Component {
     // } catch (e) {
     //   console.log(e)
     // }
-    this.prevMonth()
+    // this.prevMonth()
   }
   handleMonthContent = async jsonData => {
     // YYYYMM大小寫影響抓到傳入的日期或現在日期,大寫抓傳入
