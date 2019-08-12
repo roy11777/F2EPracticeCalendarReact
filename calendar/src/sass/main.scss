@@ -74,6 +74,7 @@ body {
     position: absolute;
     left: 0;
     top: 0;
+    flex-direction: column;
   }
   .container {
     width: 50%;
@@ -192,7 +193,7 @@ body {
               border-spacing: 0;
               border-top: none;
               border-left: none;
-              padding-left:  3px;
+              padding-left: 3px;
               position: relative;
               box-sizing: border-box;
               height: 85px;

@@ -47,54 +47,77 @@ class Mainpage extends React.Component {
     // this.prevMonth()
   }
 
+  handleNextWithData = () => {
+    const stateYear = this.state.initYearMonth
+    // 最近之後有資料距離月數
+    const month = this.nextDataSearch()[0]
+    this.setState({
+      initYearMonth: moment(stateYear, 'YYYYMM')
+        .add(month, 'months')
+        .format('YYYY/MM'),
+    })
+  }
+  handlePrevWithData = () => {
+    const stateYear = this.state.initYearMonth
+    // 最近之後有資料距離月數
+    const month = this.prevDataSearch()[0]
+    this.setState({
+      initYearMonth: moment(stateYear, 'YYYYMM')
+        .add(-month, 'months')
+        .format('YYYY/MM'),
+    })
+  }
+
+  // 往後找空資料
+  nextDataSearch = () => {
+    const stateYear = this.state.initYearMonth
+    const fetchData = this.state.fetchData
+    for (let m = 1; m < 24; m++) {
+      const next = fetchData.filter(
+        item =>
+          item.date.indexOf(
+            moment(stateYear, 'YYYYMM')
+              .add(m, 'months')
+              .format('YYYY/MM')
+          ) !== -1
+      )
+      if (next.length !== 0) {
+        return [m, next.length]
+      }
+    }
+  }
+  // 往前找空資料F
+  prevDataSearch = () => {
+    const stateYear = this.state.initYearMonth
+    const fetchData = this.state.fetchData
+    for (let n = 1; n < 24; n++) {
+      const prev = fetchData.filter(
+        item =>
+          item.date.indexOf(
+            moment(stateYear, 'YYYYMM')
+              .add(-n, 'months')
+              .format('YYYY/MM')
+          ) !== -1
+      )
+      if (prev.length !== 0) {
+        return [n, prev.length]
+      }
+    }
+  }
+
   // 判斷當月是否沒資料
   handleDataSearch = async () => {
     const stateYear = this.state.initYearMonth
-    const fetchData = this.state.fetchData
     const CurrentDataPart = this.state.CurrentDataPart
     // console.log(CurrentDataPart)
     if (CurrentDataPart.length === 0) {
-      let m = 0
-      let nextLength = 0
-      function nextDataSearch() {
-        for (m = 1; m < 24; m++) {
-          const next = fetchData.filter(
-            item =>
-              item.date.indexOf(
-                moment(stateYear, 'YYYYMM')
-                  .add(m, 'months')
-                  .format('YYYY/MM')
-              ) !== -1
-          )
-          if (next.length !== 0) {
-            // console.log(next.length)
-            nextLength = next.length
-            // m = m
-            return
-          }
-        }
-      }
-      let n = 0
-      let prevlength = 0
-      function prevDataSearch() {
-        for (n = 1; n < 24; n++) {
-          const prev = fetchData.filter(
-            item =>
-              item.date.indexOf(
-                moment(stateYear, 'YYYYMM')
-                  .add(-n, 'months')
-                  .format('YYYY/MM')
-              ) !== -1
-          )
-          if (prev.length !== 0) {
-            // console.log(prev.length)
-            prevlength = prev.length
-            return
-          }
-        }
-      }
-      prevDataSearch()
-      nextDataSearch()
+      // 往後資料
+      let m = this.nextDataSearch()[0] //資料距離
+      let nextLength = this.nextDataSearch()[1] //資料數量
+      console.log(this.nextDataSearch())
+      // 往前資料
+      let n = this.prevDataSearch()[0] //資料距離
+      let prevlength = this.prevDataSearch()[1] //資料數量
 
       if (m > n) {
         this.setState({
@@ -380,9 +403,11 @@ class Mainpage extends React.Component {
     return (
       <>
         <div className="wrapper">
-          <button className="switchBtn" onClick={this.handleSwitch}>
-            切換列表顯示
-          </button>
+          <div className="switchBtn d-flex">
+            <button onClick={this.handleSwitch}>切換列表顯示</button>
+            <button onClick={this.handlePrevWithData}>往前找有資料</button>
+            <button onClick={this.handleNextWithData}>往後找有資料</button>
+          </div>
           <div className="container">
             <div className="calender">
               <div className="monthYears d-flex alignCenter">
