@@ -8,7 +8,6 @@ class MonthTab extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
     const nowMonth = moment(
       this.props.MonthTabPack.initYearMonth,
       'YYYYMM'
@@ -23,30 +22,49 @@ class MonthTab extends React.Component {
     const rightMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
       .add(1, 'month')
       .format('YYYY  M月')
+    console.log(middleMonth)
     return (
       <>
         <div
           onClick={this.props.MonthTabPack.monthswitchLeft}
           className={'mothTabBg d-flex jusifyCenter alignCenter '}
         >
-          <span className="showmonth"> {leftMonth}</span>
+          <span className="showmonth  d-flex">
+            {leftMonth}
+            <span>
+              {this.props.MonthTabPack.prevDataLength === 0 ? '無出發日' : ''}
+            </span>
+          </span>
           <span className={nowMonth === leftMonth ? 'active' : ''}></span>
         </div>
         <div
           //   onClick={this.monthswitchMiddle}
           className={'mothTabBg d-flex jusifyCenter alignCenter '}
         >
-          <span className="showmonth"> {middleMonth}</span>
+          <span className="showmonth  d-flex">
+            {middleMonth}
+            <span>
+              {this.props.MonthTabPack.CurrentDataPart.length === 0
+                ? '無出發日'
+                : ''}
+            </span>
+          </span>
           <span className={nowMonth === middleMonth ? 'active' : ''}></span>
         </div>
         <div
           onClick={this.props.MonthTabPack.monthswitchRight}
           className={
-            'd-flex jusifyCenter alignCenter ' +
+            'mothTabBg d-flex jusifyCenter alignCenter ' +
             (nowMonth === rightMonth ? 'active' : '')
           }
         >
-          <span className="showmonth"> {rightMonth}</span>
+          <span className="showmonth d-flex">
+            {rightMonth}
+            <span>
+              {this.props.MonthTabPack.nextDataLength === 0 ? '無出發日' : ''}
+            </span>
+          </span>
+
           <span className={nowMonth === rightMonth ? 'active' : ''}></span>
         </div>
       </>

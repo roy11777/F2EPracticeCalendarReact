@@ -104,7 +104,7 @@ class DateContainer extends React.Component {
                       tour.length === 0
                         ? ''
                         : tour.length > 1
-                        ? 'blue'
+                        ? 'moreGroup  blue'
                         : tour[0].status === '報名'
                         ? 'org'
                         : tour[0].status === '預定'
@@ -119,7 +119,7 @@ class DateContainer extends React.Component {
                     {tour.length === 0
                       ? ''
                       : tour.length > 1
-                      ? tour.length + '看更多團'
+                      ? '看更多團'
                       : tour[0].status}
                   </span>
                   <span className={tour.length > 0 ? 'dark' : ''}>

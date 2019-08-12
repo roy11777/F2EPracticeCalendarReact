@@ -8,12 +8,18 @@ class Mainpage extends React.Component {
     super()
     this.state = {
       fetchData: [],
+      // 上月資料
+      prevData: [],
+      // 下月資料
+      nextData: [],
       //   當月整理好全部資料
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
       dataSource: '/data/data1.json',
-      initYearMonth: 201807,
+      initYearMonth: moment(201705, 'YYYYMM')
+        .add(1, 'months')
+        .format('YYYYMM'),
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
@@ -40,6 +46,7 @@ class Mainpage extends React.Component {
     // } catch (e) {
     //   console.log(e)
     // }
+    this.prevMonth()
   }
   handleMonthContent = async jsonData => {
     // YYYYMM大小寫影響抓到傳入的日期或現在日期,大寫抓傳入
@@ -55,6 +62,28 @@ class Mainpage extends React.Component {
     const monthStartWeekday = moment(init, 'YYYYMM').weekday()
     // 當月天數
     const monthDays = moment(init, 'YYYYMM').daysInMonth()
+
+    // 上個月所有資料
+    const PrevMonthAlltour = await jsonData.filter(
+      item =>
+        item.date.indexOf(
+          moment(init, 'YYYYMM')
+            .add(-1, 'months')
+            .format('YYYY/MM')
+        ) !== -1
+    )
+    console.log(PrevMonthAlltour)
+    // 下個月所有資料
+    const NextMonthAlltour = await jsonData.filter(
+      item =>
+        item.date.indexOf(
+          moment(init, 'YYYYMM')
+            .add(1, 'months')
+            .format('YYYY/MM')
+        ) !== -1
+    )
+    console.log(NextMonthAlltour)
+
     // 當月總共所有行程，不分日期
     const nowMonthAlltour = await jsonData.filter(
       item => item.date.indexOf(moment(init, 'YYYYMM').format('YYYY/MM')) !== -1
@@ -113,6 +142,8 @@ class Mainpage extends React.Component {
       CurrentData: dateArray,
       //   初始所有行程資料
       fetchData: jsonData,
+      prevData: PrevMonthAlltour,
+      nextData: NextMonthAlltour,
     })
     // console.log(dateArray)
     console.log(this.state.CurrentDataPart)
@@ -226,6 +257,9 @@ class Mainpage extends React.Component {
       monthswitchLeft: this.monthswitchLeft,
       monthswitchRight: this.monthswitchRight,
       initYearMonth: this.state.initYearMonth,
+      CurrentDataPart: this.state.CurrentDataPart,
+      prevDataLength: this.state.prevData.length,
+      nextDataLength: this.state.nextData.length,
     }
 
     // 計算總頁數
@@ -263,7 +297,7 @@ class Mainpage extends React.Component {
       <>
         <div className="wrapper">
           <button className="switchBtn" onClick={this.handleSwitch}>
-            切換
+            切換列表顯示
           </button>
           <div className="container">
             <div className="calender">

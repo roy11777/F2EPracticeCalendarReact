@@ -95,13 +95,22 @@ body {
 }
 
 .wrapper .container .calender .monthYears .monthTab .mothTabBg .showmonth {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   position: absolute;
   z-index: 2;
 }
 
+.wrapper .container .calender .monthYears .monthTab .mothTabBg .showmonth span {
+  font-size: 0.85rem;
+  color: #24a07c;
+}
+
 .wrapper .container .calender .monthYears .monthTab .mothTabBg .active {
   position: absolute;
-  height: 100%;
+  height: 94%;
   width: 100%;
   top: 3px;
   left: 0;
@@ -209,6 +218,23 @@ body {
 
 .wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .mutiTour {
   margin-bottom: 1rem;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .moreGroup {
+  position: relative;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .moreGroup:after {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  right: 2px;
+  top: 4px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4.5px 0 4.5px 5px;
+  border-color: transparent transparent transparent #0077b3;
 }
 
 .wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .red {
