@@ -47,25 +47,29 @@ class Mainpage extends React.Component {
     // this.prevMonth()
   }
 
-  handleNextWithData = () => {
+  handleNextWithData = async () => {
     const stateYear = this.state.initYearMonth
     // 最近之後有資料距離月數
     const month = this.nextDataSearch()[0]
-    this.setState({
+    await this.setState({
       initYearMonth: moment(stateYear, 'YYYYMM')
         .add(month, 'months')
         .format('YYYY/MM'),
     })
+    await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
   }
-  handlePrevWithData = () => {
+  handlePrevWithData = async () => {
     const stateYear = this.state.initYearMonth
     // 最近之後有資料距離月數
     const month = this.prevDataSearch()[0]
-    this.setState({
+    await this.setState({
       initYearMonth: moment(stateYear, 'YYYYMM')
         .add(-month, 'months')
         .format('YYYY/MM'),
     })
+    await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
   }
 
   // 往後找空資料
@@ -82,6 +86,7 @@ class Mainpage extends React.Component {
           ) !== -1
       )
       if (next.length !== 0) {
+        console.log(next)
         return [m, next.length]
       }
     }
@@ -90,6 +95,7 @@ class Mainpage extends React.Component {
   prevDataSearch = () => {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
+    console.log(fetchData)
     for (let n = 1; n < 24; n++) {
       const prev = fetchData.filter(
         item =>
@@ -114,7 +120,7 @@ class Mainpage extends React.Component {
       // 往後資料
       let m = this.nextDataSearch()[0] //資料距離
       let nextLength = this.nextDataSearch()[1] //資料數量
-      console.log(this.nextDataSearch())
+      // console.log(this.nextDataSearch())
       // 往前資料
       let n = this.prevDataSearch()[0] //資料距離
       let prevlength = this.prevDataSearch()[1] //資料數量
