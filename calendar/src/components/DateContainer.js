@@ -156,7 +156,8 @@ class DateContainer extends React.Component {
           >
             {this.props.Package.CurrentDataPart.map(function(e, index) {
               //   moment.locale('zh-tw')
-              //   console.log(moment(e.date, 'YYYY/MM/DD').weekdays(0))
+              // console.log(moment(e.date, 'YYYY/MM/DD').weekday())
+              const weekday = moment(e.date, 'YYYY/MM/DD').weekday()
               return (
                 <div
                   key={index + +new Date()}
@@ -167,7 +168,22 @@ class DateContainer extends React.Component {
                       <span>{moment(e.date, 'YYYY/MM/DD').get('date')}</span>
                       {/* TODO:星期幾 */}
                       <span>
-                        {'星期' + moment(e.date, 'YYYY/MM/DD').weekday()}
+                        {'星期' +
+                          (weekday === 0
+                            ? '日'
+                            : weekday === 1
+                            ? '一'
+                            : weekday === 2
+                            ? '二'
+                            : weekday === 3
+                            ? '三'
+                            : weekday === 4
+                            ? '四'
+                            : weekday === 5
+                            ? '五'
+                            : weekday === 6
+                            ? '六'
+                            : '')}
                       </span>
                     </div>
                     <div className="detail d-flex jusifyCenter">

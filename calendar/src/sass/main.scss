@@ -192,7 +192,7 @@ body {
               border-spacing: 0;
               border-top: none;
               border-left: none;
-
+              padding-left:  3px;
               position: relative;
               box-sizing: border-box;
               height: 85px;
@@ -200,8 +200,8 @@ body {
               // 成團區塊
               .readytogo {
                 position: absolute;
-                right: 2px;
-                top: 2px;
+                right: 0;
+                top: 0;
                 background: #ff7800;
                 color: #fff;
                 padding: 2px 8px;
