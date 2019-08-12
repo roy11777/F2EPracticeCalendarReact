@@ -90,6 +90,8 @@ class Mainpage extends React.Component {
         return [m, next.length]
       }
     }
+    // 如果往後沒有任何資料就回傳0不再增加月數切換月曆
+    return [0, 0]
   }
   // 往前找空資料F
   prevDataSearch = () => {
@@ -109,6 +111,8 @@ class Mainpage extends React.Component {
         return [n, prev.length]
       }
     }
+    // 如果往前沒有任何資料就回傳0不再減少月數切換月曆
+    return [0, 0]
   }
 
   // 判斷當月是否沒資料
