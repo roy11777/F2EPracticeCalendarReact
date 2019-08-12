@@ -8,6 +8,8 @@ class Mainpage extends React.Component {
     super()
     this.state = {
       fetchData: [],
+      // 當月資料
+      midData: [],
       // 上月資料
       prevData: [],
       // 下月資料
@@ -16,16 +18,17 @@ class Mainpage extends React.Component {
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
-      dataSource: '/data/data1try.json',
+      dataSource: '/data/data1.json',
       initYearMonth: 201708,
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
       nowPage: 3,
     }
-    // this.handleMonthContent = this.handleMonthContent.bind(this)
-    // this.dataInput = React.createRef()
-    // this.prevMonth = this.prevMonth.bind(this)
+
+    this.mid = React.createRef()
+    this.left = React.createRef()
+    this.right = React.createRef()
     this.rowData = React.createRef()
     // 整個列表資訊區塊
     this.straightData = React.createRef()
@@ -34,17 +37,10 @@ class Mainpage extends React.Component {
   }
 
   async componentDidMount() {
-    // try {
-    //   const response = await fetch('/data/data1.json')
-    //   const jsonObject = await response.json()
-    //   //   設state方便提用傳入內容產生function
-    //   await this.setState({ fetchData: jsonObject })
-    //   //   console.log(jsonObject)
-    //   await this.handleMonthContent(jsonObject)
-    // } catch (e) {
-    //   console.log(e)
-    // }
-    // this.prevMonth()
+    try {
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   handleNextWithData = async () => {
@@ -179,26 +175,26 @@ class Mainpage extends React.Component {
     // 當月天數
     const monthDays = moment(init, 'YYYYMM').daysInMonth()
 
+    // 產生上方月份咧表用
+    const mid = moment(this.mid.current.innerText, 'YYYYMM').format('YYYYMM')
+    const left = moment(this.left.current.innerText, 'YYYYMM').format('YYYYMM')
+    const right = moment(this.right.current.innerText, 'YYYYMM').format(
+      'YYYYMM'
+    )
+    console.log(left)
     // 上個月所有資料
     const PrevMonthAlltour = await jsonData.filter(
-      item =>
-        item.date.indexOf(
-          moment(init, 'YYYYMM')
-            .add(-1, 'months')
-            .format('YYYY/MM')
-        ) !== -1
+      item => item.date.indexOf(moment(left, 'YYYYMM').format('YYYY/MM')) !== -1
     )
-    // console.log(PrevMonthAlltour)
     // 下個月所有資料
     const NextMonthAlltour = await jsonData.filter(
       item =>
-        item.date.indexOf(
-          moment(init, 'YYYYMM')
-            .add(1, 'months')
-            .format('YYYY/MM')
-        ) !== -1
+        item.date.indexOf(moment(right, 'YYYYMM').format('YYYY/MM')) !== -1
     )
-    // console.log(NextMonthAlltour)
+    // 當月所有資料
+    const MidMonthAlltour = await jsonData.filter(
+      item => item.date.indexOf(moment(mid, 'YYYYMM').format('YYYY/MM')) !== -1
+    )
 
     // 當月總共所有行程，不分日期
     const nowMonthAlltour = await jsonData.filter(
@@ -258,16 +254,18 @@ class Mainpage extends React.Component {
       CurrentData: dateArray,
       //   初始所有行程資料
       fetchData: jsonData,
+      // 上月所有資料
       prevData: PrevMonthAlltour,
+      // 下月所有資料
       nextData: NextMonthAlltour,
+      // 當月所有資料
+      midData: MidMonthAlltour,
     })
-    // console.log(dateArray)
-    // console.log(this.state.CurrentDataPart)
   }
 
   prevMonth = async () => {
     const prevDataCheck = this.prevDataSearch()[0]
-    // console.log(prevDataCheck)
+
     const init = this.state.initYearMonth
     if (prevDataCheck !== 0) {
       const newyearDate = Number(
@@ -371,8 +369,6 @@ class Mainpage extends React.Component {
       this.straightData.current.classList.add('d-none')
       this.rowData.current.classList.remove('d-none')
     }
-    // this.setState({ switch: !this.state.switch })
-    console.log('123')
   }
 
   render() {
@@ -383,6 +379,9 @@ class Mainpage extends React.Component {
       CurrentDataPart: this.state.CurrentDataPart,
       prevDataLength: this.state.prevData.length,
       nextDataLength: this.state.nextData.length,
+      midDataLength: this.state.midData.length,
+      prevDataCheck: this.prevDataSearch,
+      nextDataCheck: this.nextDataSearch,
     }
 
     // 計算總頁數
@@ -431,7 +430,13 @@ class Mainpage extends React.Component {
               <div className="monthYears d-flex alignCenter">
                 <div className="pageBtn prev" onClick={this.prevMonth}></div>
                 <div className="monthTab d-flex">
-                  <MonthTab className="" MonthTabPack={MonthTabPack} />
+                  <MonthTab
+                    className=""
+                    MonthTabPack={MonthTabPack}
+                    left={this.left}
+                    right={this.right}
+                    mid={this.mid}
+                  />
                 </div>
                 <div className="pageBtn next" onClick={this.nextMonth}></div>
               </div>
