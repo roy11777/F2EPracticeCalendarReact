@@ -40,13 +40,16 @@ class DateContainer extends React.Component {
   }
 
   handleRowFocus = async i => {
-    // console.log(this.props.rowContent.current.childNodes[i])
     const eleClick = this.props.rowContent.current.childNodes
-    for (let j = 0; j < eleClick.length; j++) {
-      eleClick[j].classList.remove('onFocus')
+    // console.log(eleClick[i].classList.contains('nodata'))
+    // MAP出來如果當日沒資料會新增 no data class
+    if (!eleClick[i].classList.contains('nodata')) {
+      for (let j = 0; j < eleClick.length; j++) {
+        eleClick[j].classList.remove('onFocus')
+      }
+      await eleClick[i].classList.add('onFocus')
     }
-    await eleClick[i].classList.add('onFocus')
-    // console.log(i)
+    console.log(i)
   }
   handleStraightFocus = async i => {
     // console.log(this.props.rowContent.current.childNodes[i])
@@ -80,14 +83,15 @@ class DateContainer extends React.Component {
           <div className="d-flex itineraryBox" ref={this.props.rowContent}>
             {this.props.Package.CurrentData.map(function(ele, index) {
               const tour = ele.matchTour
-              //   console.log(ele)
+              console.log(tour)
               return (
                 <div
                   onClick={handleRowFocus.bind(this, index)}
                   key={index + +new Date()}
                   className={
                     (ele.calendarDate === '' ? 'disable' : 'active') +
-                    ' jusifyCenter alignCenter itinerary '
+                    ' jusifyCenter alignCenter itinerary ' +
+                    (tour.length === 0 ? 'nodata' : '')
                   }
                 >
                   <span
