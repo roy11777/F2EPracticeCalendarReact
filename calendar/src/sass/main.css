@@ -50,6 +50,11 @@ body {
   color: #666;
 }
 
+.onFocus {
+  background: #fff9e3 !important;
+  border: 1px solid #66bb3c !important;
+}
+
 .wrapper {
   position: relative;
   width: 1280px;
@@ -302,7 +307,7 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border: 1px solid #eeeeee;
-  border-top: none !important;
+  border-top: none;
 }
 
 .wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .date {

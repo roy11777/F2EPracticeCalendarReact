@@ -23,13 +23,15 @@ class Mainpage extends React.Component {
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
-      nowPage: 3,
+      nowPage: 1,
     }
 
     this.mid = React.createRef()
     this.left = React.createRef()
     this.right = React.createRef()
     this.rowData = React.createRef()
+    // 月曆純內容
+    this.rowContent = React.createRef()
     // 整個列表資訊區塊
     this.straightData = React.createRef()
     // 個別列表資訊區塊
@@ -458,8 +460,8 @@ class Mainpage extends React.Component {
                     straightData={this.straightData}
                     rowData={this.rowData}
                     straightDataShow={this.straightDataShow}
+                    rowContent={this.rowContent}
                   />
-                  {/* <DateContainer Package={Package} ref={this.dataInput} /> */}
                 </div>
               </div>
             </div>

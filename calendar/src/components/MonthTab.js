@@ -13,8 +13,6 @@ class MonthTab extends React.Component {
   render() {
     const preCheck = this.props.MonthTabPack.prevDataCheck()[0]
     const nextCheck = this.props.MonthTabPack.nextDataCheck()[0]
-    // console.log(preCheck)
-    // console.log(nextCheck)
 
     const nowMonth = moment(
       this.props.MonthTabPack.initYearMonth,
@@ -29,7 +27,6 @@ class MonthTab extends React.Component {
     const rightMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
       .add(preCheck === 0 ? 2 : nextCheck === 0 ? 0 : 1, 'month')
       .format('YYYY  M月')
-    // console.log(middleMonth)
     return (
       <>
         <div

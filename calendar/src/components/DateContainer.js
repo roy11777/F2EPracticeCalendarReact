@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-// import '/moment/locale/zh-tw'
 
 class DateContainer extends React.Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class DateContainer extends React.Component {
 
   async componentDidMount() {
     try {
-      //   const api = JSON.stringify(this.props.Package.dataSource)
       //   TODO:直接fetch array
       const response = await fetch(this.props.Package.dataSource)
       const jsonObject = await response.json()
@@ -41,11 +39,22 @@ class DateContainer extends React.Component {
     // 初始化列表顯示內容
   }
 
+  handleRowFocus = i => {
+    // console.log(this.props.rowContent.current.childNodes[i])
+    this.props.rowContent.current.childNodes[i].classList.add('onFocus')
+    console.log(i)
+  }
+  handleStraightFocus = i => {
+    // console.log(this.props.rowContent.current.childNodes[i])
+    this.props.straightDataShow.current.childNodes[i].classList.add('onFocus')
+    console.log(i)
+  }
+
   render() {
-    // console.log(this.props.Package.CurrentData)
-    // console.log(this.props.Package)
     // 顯示總頁數
 
+    const handleRowFocus = this.handleRowFocus
+    const handleStraightFocus = this.handleStraightFocus
     return (
       <>
         {/* TODO:border設定 */}
@@ -60,12 +69,13 @@ class DateContainer extends React.Component {
             <div>星期五</div>
             <div>星期六</div>
           </div>
-          <div className="d-flex itineraryBox">
+          <div className="d-flex itineraryBox" ref={this.props.rowContent}>
             {this.props.Package.CurrentData.map(function(ele, index) {
               const tour = ele.matchTour
               //   console.log(ele)
               return (
                 <div
+                  onClick={handleRowFocus.bind(this, index)}
                   key={index + +new Date()}
                   className={
                     (ele.calendarDate === '' ? 'disable' : 'active') +
@@ -163,11 +173,10 @@ class DateContainer extends React.Component {
             ref={this.props.straightDataShow}
           >
             {this.props.Package.CurrentDataPart.map(function(e, index) {
-              //   moment.locale('zh-tw')
-              // console.log(moment(e.date, 'YYYY/MM/DD').weekday())
               const weekday = moment(e.date, 'YYYY/MM/DD').weekday()
               return (
                 <div
+                  onClick={handleStraightFocus.bind(this, index)}
                   key={index + +new Date()}
                   className="itineraryStraight d-none active"
                 >

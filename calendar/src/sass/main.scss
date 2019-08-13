@@ -66,6 +66,10 @@ body {
 .dark {
   color: $tourInfo-color-dark;
 }
+.onFocus {
+  background: $tourInfo-hover-bg !important;
+  border: 1px solid $tourInfo-border-hover-color !important;
+}
 .wrapper {
   position: relative;
   width: $screen-lg-desktop;
@@ -272,7 +276,7 @@ body {
                 max-height: 62px;
                 box-sizing: border-box;
                 border: 1px solid $tourInfo-border-color;
-                border-top: none !important;
+                border-top: none;
 
                 .date {
                   width: 10%;
