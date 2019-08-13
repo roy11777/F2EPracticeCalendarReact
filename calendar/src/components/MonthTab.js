@@ -45,7 +45,7 @@ class MonthTab extends React.Component {
           <span className={nowMonth === leftMonth ? 'active' : ''}></span>
         </div>
         <div
-          //   onClick={this.monthswitchMiddle}
+          onClick={this.props.MonthTabPack.monthswitchMiddle}
           className={'mothTabBg d-flex jusifyCenter alignCenter '}
         >
           <span className="showmonth  d-flex" ref={this.props.mid}>

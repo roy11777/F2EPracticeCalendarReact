@@ -295,20 +295,31 @@ class Mainpage extends React.Component {
     }
   }
   monthswitchLeft = async () => {
-    this.prevMonth()
+    const left = moment(this.left.current.innerText, 'YYYYMM').format('YYYYMM')
+    const newyearDate = Number(moment(left, 'YYYYMM').format('YYYYMM'))
+    await this.setState({ initYearMonth: newyearDate })
+    await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
   }
-  monthswitchRight = () => {
-    this.nextMonth()
+  monthswitchRight = async () => {
+    const right = moment(this.right.current.innerText, 'YYYYMM').format(
+      'YYYYMM'
+    )
+    const newyearDate = Number(moment(right, 'YYYYMM').format('YYYYMM'))
+    await this.setState({ initYearMonth: newyearDate })
+    await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
   }
-  //   monthswitchMiddle = async () => {
-  //     // console.log(e.target)
-  //     this.nextMonth()
-  //   }
+  monthswitchMiddle = async () => {
+    const mid = moment(this.mid.current.innerText, 'YYYYMM').format('YYYYMM')
+    const newyearDate = Number(moment(mid, 'YYYYMM').format('YYYYMM'))
+    await this.setState({ initYearMonth: newyearDate })
+    await this.handleMonthContent(this.state.fetchData)
+    await this.handleStraightPages()
+  }
 
   //   列表顯示內容
   handleStraightPages = (x, y) => {
-    // const perPage = x
-    // const nowPage = y
     const perPage = this.state.perPage
     const nowPage = this.state.nowPage
     // ref allElement
@@ -375,6 +386,7 @@ class Mainpage extends React.Component {
     const MonthTabPack = {
       monthswitchLeft: this.monthswitchLeft,
       monthswitchRight: this.monthswitchRight,
+      monthswitchMiddle: this.monthswitchMiddle,
       initYearMonth: this.state.initYearMonth,
       CurrentDataPart: this.state.CurrentDataPart,
       prevDataLength: this.state.prevData.length,
@@ -416,7 +428,6 @@ class Mainpage extends React.Component {
         price: 'price',
       },
     }
-    // console.log(Package.dataSource)
     return (
       <>
         <div className="wrapper">
@@ -431,7 +442,6 @@ class Mainpage extends React.Component {
                 <div className="pageBtn prev" onClick={this.prevMonth}></div>
                 <div className="monthTab d-flex">
                   <MonthTab
-                    className=""
                     MonthTabPack={MonthTabPack}
                     left={this.left}
                     right={this.right}
