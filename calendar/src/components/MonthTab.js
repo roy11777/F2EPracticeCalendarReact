@@ -27,6 +27,7 @@ class MonthTab extends React.Component {
     const rightMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
       .add(preCheck === 0 ? 2 : nextCheck === 0 ? 0 : 1, 'month')
       .format('YYYY  M月')
+    // console.log(this.props.MonthTabPack.prevDataLength)
     return (
       <>
         <div
