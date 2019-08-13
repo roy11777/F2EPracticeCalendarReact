@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-// import '/moment/locale/zh-tw'
 
 class DateContainer extends React.Component {
   constructor(props) {
@@ -10,45 +9,69 @@ class DateContainer extends React.Component {
 
   async componentDidMount() {
     try {
-      //   const api = JSON.stringify(this.props.Package.dataSource)
-      //   TODO:直接fetch array
-      const response = await fetch(this.props.Package.dataSource)
-      const jsonObject = await response.json()
-      const settingObj = this.props.Package.dataKeySetting
-      const parseData = []
+      const sourcePattern = /^(((^((https||http):\/\/(\w+\.)+\w+)\/?)?)||(((((\.){0,2})\/)+)?))((\w+\/)+)?(((((\.){0,2})\/)+)?(\w+(\.(\w+))?))?$/
+      if (sourcePattern.test(this.props.Package.dataSource)) {
+        const response = await fetch(this.props.Package.dataSource)
+        const jsonObject = await response.json()
+        const settingObj = this.props.Package.dataKeySetting
+        const parseData = []
 
-      //   轉換不同json對應key
-      for (let i = 0; i < jsonObject.length; i++) {
-        let obj = {
-          guaranteed: jsonObject[i][settingObj.guaranteed],
-          date: jsonObject[i].date,
-          status: jsonObject[i][settingObj.status],
-          available: jsonObject[i][settingObj.available],
-          total: jsonObject[i][settingObj.total],
-          price: jsonObject[i][settingObj.price],
+        //   轉換不同json對應key
+        for (let i = 0; i < jsonObject.length; i++) {
+          let obj = {
+            guaranteed: jsonObject[i][settingObj.guaranteed],
+            date: jsonObject[i].date,
+            status: jsonObject[i][settingObj.status],
+            available: jsonObject[i][settingObj.available],
+            total: jsonObject[i][settingObj.total],
+            price: jsonObject[i][settingObj.price],
+          }
+          parseData.push(obj)
         }
-        parseData.push(obj)
+
+        await this.props.Package.method(parseData)
+        await this.props.Package.methodstraight()
+        // 如果當月沒資則觸發下列搜尋最近function
+        await this.props.Package.dataSearch()
+        // console.log(this.props.Package.initYearMonth)
+      } else {
+        alert('請輸入正確來源')
       }
-      //   設state方便提用傳入內容產生function
-      //   await this.setState({ fetchData: jsonObject })
-      //   console.log(parseData)
-      await this.props.Package.method(parseData)
-      await this.props.Package.methodstraight()
-      console.log(this.props.Package.CurrentData)
     } catch (e) {
       console.log(e)
     }
     // 初始化列表顯示內容
   }
 
+  handleRowFocus = async i => {
+    const eleClick = this.props.rowContent.current.childNodes
+    // console.log(eleClick[i].classList.contains('nodata'))
+    // MAP出來如果當日沒資料會新增 no data class
+    if (!eleClick[i].classList.contains('nodata')) {
+      for (let j = 0; j < eleClick.length; j++) {
+        eleClick[j].classList.remove('onFocus')
+      }
+      await eleClick[i].classList.add('onFocus')
+    }
+    console.log(i)
+  }
+  handleStraightFocus = async i => {
+    // console.log(this.props.rowContent.current.childNodes[i])
+    const eleClick = this.props.straightDataShow.current.childNodes
+    for (let j = 0; j < eleClick.length; j++) {
+      eleClick[j].classList.remove('onFocus')
+    }
+    eleClick[i].classList.add('onFocus')
+    // console.log(i)
+  }
+
   render() {
-    console.log(this.props.Package.CurrentData)
-    console.log(this.props.Package)
     // 顯示總頁數
 
+    const handleRowFocus = this.handleRowFocus
+    const handleStraightFocus = this.handleStraightFocus
     return (
       <>
-        {/* TODO:border設定 */}
         {/* 日歷模式 */}
         <div ref={this.props.rowData}>
           <div className="weekday list-unstyle d-flex jusifyCenter alignCenter">
@@ -60,16 +83,18 @@ class DateContainer extends React.Component {
             <div>星期五</div>
             <div>星期六</div>
           </div>
-          <div className="d-flex itineraryBox">
+          <div className="d-flex itineraryBox" ref={this.props.rowContent}>
             {this.props.Package.CurrentData.map(function(ele, index) {
               const tour = ele.matchTour
-              //   console.log(ele)
+              // console.log(tour)
               return (
                 <div
+                  onClick={handleRowFocus.bind(this, index)}
                   key={index + +new Date()}
                   className={
-                    (ele.calendarDate === '' ? 'disable' : '') +
-                    ' jusifyCenter alignCenter itinerary'
+                    (ele.calendarDate === '' ? 'disable' : 'active') +
+                    ' jusifyCenter alignCenter itinerary ' +
+                    (tour.length === 0 ? 'nodata' : '')
                   }
                 >
                   <span
@@ -104,7 +129,7 @@ class DateContainer extends React.Component {
                       tour.length === 0
                         ? ''
                         : tour.length > 1
-                        ? 'blue'
+                        ? 'moreGroup  blue'
                         : tour[0].status === '報名'
                         ? 'org'
                         : tour[0].status === '預定'
@@ -119,7 +144,7 @@ class DateContainer extends React.Component {
                     {tour.length === 0
                       ? ''
                       : tour.length > 1
-                      ? tour.length + '看更多團'
+                      ? '看更多團'
                       : tour[0].status}
                   </span>
                   <span className={tour.length > 0 ? 'dark' : ''}>
@@ -149,22 +174,48 @@ class DateContainer extends React.Component {
           </div>
         </div>
         {/* 列表模式 */}
-        <div className="d-none" ref={this.props.straightData}>
-          <div ref={this.props.straightDataShow}>
+        <div className="straightContainer d-none" ref={this.props.straightData}>
+          <div
+            className={
+              'd-flex nodata ' +
+              (this.props.Package.CurrentDataPart.length === 0 ? '' : 'd-none')
+            }
+          >
+            <span>本月無出發行程</span>
+          </div>
+          <div
+            className="itineraryStraightBox d-flex"
+            ref={this.props.straightDataShow}
+          >
             {this.props.Package.CurrentDataPart.map(function(e, index) {
-              //   moment.locale('zh-tw')
-              //   console.log(moment(e.date, 'YYYY/MM/DD').weekdays(0))
+              const weekday = moment(e.date, 'YYYY/MM/DD').weekday()
               return (
                 <div
+                  onClick={handleStraightFocus.bind(this, index)}
                   key={index + +new Date()}
-                  className="itineraryStraight d-none"
+                  className="itineraryStraight d-none active"
                 >
                   <div className="d-flex">
                     <div className="date dark  d-flex alignCenter">
                       <span>{moment(e.date, 'YYYY/MM/DD').get('date')}</span>
                       {/* TODO:星期幾 */}
                       <span>
-                        {'星期' + moment(e.date, 'YYYY/MM/DD').weekday()}
+                        {'星期' +
+                          (weekday === 0
+                            ? '日'
+                            : weekday === 1
+                            ? '一'
+                            : weekday === 2
+                            ? '二'
+                            : weekday === 3
+                            ? '三'
+                            : weekday === 4
+                            ? '四'
+                            : weekday === 5
+                            ? '五'
+                            : weekday === 6
+                            ? '六'
+                            : '')}
                       </span>
                     </div>
                     <div className="detail d-flex jusifyCenter">
@@ -206,11 +257,33 @@ class DateContainer extends React.Component {
             })}
           </div>
           <div className="pageArea d-flex">
-            <button onClick={this.props.Package.handlePrevPage}>上一頁</button>
-            <div>
-              {this.props.Package.nowPage + '/' + this.props.Package.totalPages}
+            <div
+              className={
+                'pageBtnStraight ' +
+                (this.props.Package.nowPage === 1 ? ' hide' : '')
+              }
+              onClick={this.props.Package.handlePrevPage}
+            >
+              <span className="left"></span>
+              上一頁
             </div>
-            <button onClick={this.props.Package.handleNextPage}>下一頁</button>
+            <div>
+              {this.props.Package.nowPage +
+                '/ ' +
+                this.props.Package.totalPages}
+            </div>
+            <div
+              className={
+                'pageBtnStraight ' +
+                (this.props.Package.nowPage === this.props.Package.totalPages
+                  ? 'hide'
+                  : '')
+              }
+              onClick={this.props.Package.handleNextPage}
+            >
+              下一頁
+              <span className="right"></span>
+            </div>
           </div>
         </div>
       </>

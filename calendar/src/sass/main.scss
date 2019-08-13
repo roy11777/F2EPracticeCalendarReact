@@ -14,12 +14,14 @@ $font-table-family: '微軟正黑體', 'Arial, Helvetica, sans-serif';
 $calendarWidth: 50%;
 $monthBg: #ede9dd;
 $body-bg: #f8f8f8;
+$tourInfo-hover-bg: #fff9e3; //
 $font-size-weekday: 0.85rem;
 // 月曆版字體大小
 $font-size-info: 0.75rem;
 // 直版中間字體大小
 $font-size-straigt: 0.85rem;
 
+$tourInfo-border-hover-color: #66bb3c;
 $tourInfo-border-color: #eeeeee;
 // stutus Color
 $tourInfo-color-lightg: #24a07c; // 候補 請洽專員
@@ -64,12 +66,35 @@ body {
 .dark {
   color: $tourInfo-color-dark;
 }
+.onFocus {
+  background: $tourInfo-hover-bg !important;
+  border: 1px solid $tourInfo-border-hover-color !important;
+}
+.hide {
+  visibility: hidden;
+}
+
 .wrapper {
-  width: $screen-lg-desktop;
-  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  .switchBtn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+  }
   .container {
-    width: 50%;
-    min-height: 400px;
+    @media screen and (min-width: $screen-desktop) {
+      width: 50%;
+    }
+    @media screen and (min-width: $screen-tablet) and (max-width: $screen-tablet-max) {
+      width: 60%;
+    }
+    @media screen and (max-width: $screen-phone-max) {
+      width: 70%;
+    }
+
+    // min-height: 400px;
     padding: 12px;
     margin: 0 auto;
     border: 2px solid #86cacb;
@@ -80,16 +105,80 @@ body {
 
       .monthYears {
         div {
-          flex-grow: 1;
           background: #ede9dd;
           cursor: pointer;
           text-align: center;
           height: 50px;
           color: $tourInfo-color-dark;
         }
+        .monthTab {
+          width: 90%;
+
+          div {
+            width: 33%;
+          }
+          .mothTabBg {
+            position: relative;
+
+            .showmonth {
+              flex-direction: column;
+              position: absolute;
+              z-index: 2;
+              span {
+                font-size: $font-size-straigt;
+                color: $tourInfo-color-lightg;
+              }
+            }
+            .active {
+              position: absolute;
+              height: 94%;
+              width: 100%;
+              top: 3px;
+              left: 0;
+              background: #fff;
+              z-index: 0;
+            }
+          }
+        }
+        .pageBtn {
+          width: 5%;
+          position: relative;
+        }
+        .prev:before {
+          margin: auto;
+          position: absolute;
+          display: inline-block;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          content: '';
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 7px 7px 7px 0;
+          border-color: transparent #e10500 transparent transparent;
+        }
+        .next:before {
+          margin: auto;
+          position: absolute;
+          display: inline-block;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          content: '';
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 7px 0 7px 7px;
+          border-color: transparent transparent transparent #e10500;
+        }
       }
       .calendarMain {
+        min-height: 542px;
         .dateContent {
+          height: 100%;
           .weekday {
             background: transparent;
             border: 1px solid $tourInfo-border-color;
@@ -110,12 +199,17 @@ body {
               background: $body-bg;
               border: none !important;
             }
+            .active:hover {
+              cursor: pointer;
+              background: $tourInfo-hover-bg;
+            }
             .itinerary {
               border: 1px solid $tourInfo-border-color;
               border-collapse: collapse;
               border-spacing: 0;
               border-top: none;
               border-left: none;
+              padding-left: 3px;
               position: relative;
               box-sizing: border-box;
               height: 85px;
@@ -123,14 +217,30 @@ body {
               // 成團區塊
               .readytogo {
                 position: absolute;
-                right: 2px;
-                top: 2px;
+                right: 0;
+                top: 0;
                 background: #ff7800;
                 color: #fff;
                 padding: 2px 8px;
               }
               .mutiTour {
                 margin-bottom: 1rem;
+              }
+              .moreGroup {
+                position: relative;
+              }
+              .moreGroup:after {
+                position: absolute;
+                content: '';
+                display: inline-block;
+                right: 2px;
+                top: 4px;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 4.5px 0 4.5px 5px;
+                border-color: transparent transparent transparent
+                  $tourInfo-color-blue;
               }
 
               .red {
@@ -153,46 +263,100 @@ body {
               width: 100%;
             }
           }
-          .itineraryStraight {
-            width: 100%;
-            height: 60px;
-            box-sizing: border-box;
-            border: 1px solid $tourInfo-border-color;
-            border-top: none !important;
-            .date {
-              width: 10%;
-              flex-direction: column;
-              :first-child {
-                font-size: 1.5rem;
+          .straightContainer {
+            height: 542px;
+            position: relative;
+            .nodata {
+              position: absolute;
+              top: 20px;
+              width: 100%;
+              span {
+                margin: 0 auto;
               }
             }
-            .detail {
-              width: 65%;
-              font-size: $font-size-straigt;
+            .itineraryStraightBox {
+              height: 92%;
               flex-direction: column;
-
-              .ready {
-                background: #ff7800;
-                color: #fff;
-                padding: 1px 4px;
-                border-radius: 4px;
+              .active:hover {
+                cursor: pointer;
+                background: $tourInfo-hover-bg;
+                border: 1px solid $tourInfo-border-hover-color !important;
               }
-              div {
-                padding: 5px 0;
-                span {
-                  margin-right: 20px;
+              .itineraryStraight {
+                width: 100%;
+                flex-grow: 1;
+                max-height: 62px;
+                box-sizing: border-box;
+                border: 1px solid $tourInfo-border-color;
+                border-top: none;
+
+                .date {
+                  width: 10%;
+                  flex-direction: column;
+                  :first-child {
+                    font-size: 1.5rem;
+                  }
+                }
+                .detail {
+                  width: 65%;
+                  font-size: $font-size-straigt;
+                  flex-direction: column;
+
+                  .ready {
+                    background: #ff7800;
+                    color: #fff;
+                    padding: 1px 4px;
+                    border-radius: 4px;
+                  }
+                  div {
+                    padding: 5px 0;
+                    span {
+                      margin-right: 20px;
+                    }
+                  }
+                }
+                .priceStatus {
+                  width: 25%;
+                  flex-direction: column;
+                  align-items: flex-end;
+                  span {
+                    padding: 2px 5px;
+                  }
+                  .red {
+                    color: $tourInfo-color-red;
+                  }
                 }
               }
             }
-            .priceStatus {
-              width: 25%;
-              flex-direction: column;
-              align-items: flex-end;
-              span {
-                padding: 2px 5px;
+            .pageArea {
+              height: 8%;
+              justify-content: space-between;
+              align-items: center;
+              margin: 5px 0;
+              .pageBtnStraight {
+                color: $tourInfo-color-blue;
+                text-decoration: underline;
+                cursor: pointer;
               }
-              .red {
-                color: $tourInfo-color-red;
+              .left {
+                margin: 2px 4px;
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 4.5px 5px 4.5px 0;
+                border-color: transparent $tourInfo-color-blue transparent
+                  transparent;
+              }
+              .right {
+                margin: 2px 4px;
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 4.5px 0 4.5px 5px;
+                border-color: transparent transparent transparent
+                  $tourInfo-color-blue;
               }
             }
           }

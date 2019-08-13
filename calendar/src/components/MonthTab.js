@@ -4,40 +4,71 @@ import moment from 'moment'
 class MonthTab extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      boudry: false,
+    }
   }
 
+  componentDidMount() {}
   render() {
-    // console.log(this.props)
-    const leftMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
-      .add(-1, 'month')
-      .format('YYYY  M月')
-    const middleMonth = moment(
+    const preCheck = this.props.MonthTabPack.prevDataCheck()[0]
+    const nextCheck = this.props.MonthTabPack.nextDataCheck()[0]
+
+    const nowMonth = moment(
       this.props.MonthTabPack.initYearMonth,
       'YYYYMM'
     ).format('YYYY  M月')
-    const rightMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
-      .add(1, 'month')
+    const leftMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
+      .add(preCheck === 0 ? 0 : nextCheck === 0 ? -2 : -1, 'month')
       .format('YYYY  M月')
+    const middleMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
+      .add(preCheck === 0 ? 1 : nextCheck === 0 ? -1 : 0, 'month')
+      .format('YYYY  M月')
+    const rightMonth = moment(this.props.MonthTabPack.initYearMonth, 'YYYYMM')
+      .add(preCheck === 0 ? 2 : nextCheck === 0 ? 0 : 1, 'month')
+      .format('YYYY  M月')
+    // console.log(this.props.MonthTabPack.prevDataLength)
     return (
       <>
         <div
           onClick={this.props.MonthTabPack.monthswitchLeft}
-          className="d-flex jusifyCenter alignCenter"
+          className={'mothTabBg d-flex jusifyCenter alignCenter '}
         >
-          <span> {leftMonth}</span>
+          <span className="showmonth  d-flex" ref={this.props.left}>
+            {leftMonth}
+            <span>
+              {this.props.MonthTabPack.prevDataLength === 0 ? '無出發日' : ''}
+            </span>
+          </span>
+          <span className={nowMonth === leftMonth ? 'active' : ''}></span>
         </div>
         <div
-          //   onClick={this.monthswitchMiddle}
-          className="d-flex jusifyCenter alignCenter"
+          onClick={this.props.MonthTabPack.monthswitchMiddle}
+          className={'mothTabBg d-flex jusifyCenter alignCenter '}
         >
-          <span> {middleMonth}</span>
+          <span className="showmonth  d-flex" ref={this.props.mid}>
+            {middleMonth}
+            <span>
+              {this.props.MonthTabPack.midDataLength === 0 ? '無出發日' : ''}
+            </span>
+          </span>
+          <span className={nowMonth === middleMonth ? 'active' : ''}></span>
         </div>
         <div
           onClick={this.props.MonthTabPack.monthswitchRight}
-          className="d-flex jusifyCenter alignCenter"
+          className={
+            'mothTabBg d-flex jusifyCenter alignCenter ' +
+            (nowMonth === rightMonth ? 'active' : '')
+          }
         >
-          <span> {rightMonth}</span>
+          <span className="showmonth d-flex" ref={this.props.right}>
+            {rightMonth}
+            <span>
+              {this.props.MonthTabPack.nextDataLength === 0 ? '無出發日' : ''}
+            </span>
+          </span>
+
+          <span className={nowMonth === rightMonth ? 'active' : ''}></span>
         </div>
       </>
     )

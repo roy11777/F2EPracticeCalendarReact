@@ -50,18 +50,53 @@ body {
   color: #666;
 }
 
+.onFocus {
+  background: #fff9e3 !important;
+  border: 1px solid #66bb3c !important;
+}
+
+.hide {
+  visibility: hidden;
+}
+
 .wrapper {
-  width: 1280px;
-  margin: 0 auto;
+  position: relative;
+  width: 100%;
+}
+
+.wrapper .switchBtn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .wrapper .container {
-  width: 50%;
-  min-height: 400px;
   padding: 12px;
   margin: 0 auto;
   border: 2px solid #86cacb;
   background: #fff;
+}
+
+@media screen and (min-width: 980px) {
+  .wrapper .container {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 979px) {
+  .wrapper .container {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper .container {
+    width: 70%;
+  }
 }
 
 .wrapper .container .calender {
@@ -69,9 +104,6 @@ body {
 }
 
 .wrapper .container .calender .monthYears div {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
   background: #ede9dd;
   cursor: pointer;
   text-align: center;
@@ -79,7 +111,85 @@ body {
   color: #666;
 }
 
+.wrapper .container .calender .monthYears .monthTab {
+  width: 90%;
+}
+
+.wrapper .container .calender .monthYears .monthTab div {
+  width: 33%;
+}
+
+.wrapper .container .calender .monthYears .monthTab .mothTabBg {
+  position: relative;
+}
+
+.wrapper .container .calender .monthYears .monthTab .mothTabBg .showmonth {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  z-index: 2;
+}
+
+.wrapper .container .calender .monthYears .monthTab .mothTabBg .showmonth span {
+  font-size: 0.85rem;
+  color: #24a07c;
+}
+
+.wrapper .container .calender .monthYears .monthTab .mothTabBg .active {
+  position: absolute;
+  height: 94%;
+  width: 100%;
+  top: 3px;
+  left: 0;
+  background: #fff;
+  z-index: 0;
+}
+
+.wrapper .container .calender .monthYears .pageBtn {
+  width: 5%;
+  position: relative;
+}
+
+.wrapper .container .calender .monthYears .prev:before {
+  margin: auto;
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 7px 7px 7px 0;
+  border-color: transparent #e10500 transparent transparent;
+}
+
+.wrapper .container .calender .monthYears .next:before {
+  margin: auto;
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 7px 0 7px 7px;
+  border-color: transparent transparent transparent #e10500;
+}
+
+.wrapper .container .calender .calendarMain {
+  min-height: 542px;
+}
+
 .wrapper .container .calender .calendarMain .dateContent {
+  height: 100%;
   background: transparent;
 }
 
@@ -108,12 +218,18 @@ body {
   border: none !important;
 }
 
+.wrapper .container .calender .calendarMain .dateContent .itineraryBox .active:hover {
+  cursor: pointer;
+  background: #fff9e3;
+}
+
 .wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary {
   border: 1px solid #eeeeee;
   border-collapse: collapse;
   border-spacing: 0;
   border-top: none;
   border-left: none;
+  padding-left: 3px;
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -123,8 +239,8 @@ body {
 
 .wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .readytogo {
   position: absolute;
-  right: 2px;
-  top: 2px;
+  right: 0;
+  top: 0;
   background: #ff7800;
   color: #fff;
   padding: 2px 8px;
@@ -132,6 +248,23 @@ body {
 
 .wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .mutiTour {
   margin-bottom: 1rem;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .moreGroup {
+  position: relative;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .moreGroup:after {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  right: 2px;
+  top: 4px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4.5px 0 4.5px 5px;
+  border-color: transparent transparent transparent #0077b3;
 }
 
 .wrapper .container .calender .calendarMain .dateContent .itineraryBox .itinerary .red {
@@ -156,16 +289,48 @@ body {
   width: 100%;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer {
+  height: 542px;
+  position: relative;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .nodata {
+  position: absolute;
+  top: 20px;
   width: 100%;
-  height: 60px;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .nodata span {
+  margin: 0 auto;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox {
+  height: 92%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .active:hover {
+  cursor: pointer;
+  background: #fff9e3;
+  border: 1px solid #66bb3c !important;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight {
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 62px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border: 1px solid #eeeeee;
-  border-top: none !important;
+  border-top: none;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .date {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .date {
   width: 10%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -173,11 +338,11 @@ body {
           flex-direction: column;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .date :first-child {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .date :first-child {
   font-size: 1.5rem;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .detail {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .detail {
   width: 65%;
   font-size: 0.85rem;
   -webkit-box-orient: vertical;
@@ -186,22 +351,22 @@ body {
           flex-direction: column;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .detail .ready {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .detail .ready {
   background: #ff7800;
   color: #fff;
   padding: 1px 4px;
   border-radius: 4px;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .detail div {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .detail div {
   padding: 5px 0;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .detail div span {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .detail div span {
   margin-right: 20px;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .priceStatus {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .priceStatus {
   width: 25%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -212,11 +377,48 @@ body {
           align-items: flex-end;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .priceStatus span {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .priceStatus span {
   padding: 2px 5px;
 }
 
-.wrapper .container .calender .calendarMain .dateContent .itineraryStraight .priceStatus .red {
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .itineraryStraightBox .itineraryStraight .priceStatus .red {
   color: #e10500;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .pageArea {
+  height: 8%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 5px 0;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .pageArea .pageBtnStraight {
+  color: #0077b3;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .pageArea .left {
+  margin: 2px 4px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4.5px 5px 4.5px 0;
+  border-color: transparent #0077b3 transparent transparent;
+}
+
+.wrapper .container .calender .calendarMain .dateContent .straightContainer .pageArea .right {
+  margin: 2px 4px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4.5px 0 4.5px 5px;
+  border-color: transparent transparent transparent #0077b3;
 }
 /*# sourceMappingURL=main.css.map */
