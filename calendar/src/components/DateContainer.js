@@ -67,7 +67,8 @@ class DateContainer extends React.Component {
 
   render() {
     // 顯示總頁數
-
+    // console.log(this.props.Package.nowPage)
+    // console.log(this.props.Package.totalPages)
     const handleRowFocus = this.handleRowFocus
     const handleStraightFocus = this.handleStraightFocus
     return (
@@ -189,6 +190,7 @@ class DateContainer extends React.Component {
           >
             {this.props.Package.CurrentDataPart.map(function(e, index) {
               const weekday = moment(e.date, 'YYYY/MM/DD').weekday()
+
               return (
                 <div
                   onClick={handleStraightFocus.bind(this, index)}
@@ -260,7 +262,7 @@ class DateContainer extends React.Component {
             <div
               className={
                 'pageBtnStraight ' +
-                (this.props.Package.nowPage === 1 ? ' hide' : '')
+                (Number(this.props.Package.nowPage) === 1 ? ' hide' : '')
               }
               onClick={this.props.Package.handlePrevPage}
             >
@@ -275,7 +277,8 @@ class DateContainer extends React.Component {
             <div
               className={
                 'pageBtnStraight ' +
-                (this.props.Package.nowPage === this.props.Package.totalPages
+                (Number(this.props.Package.nowPage) ===
+                Number(this.props.Package.totalPages)
                   ? 'hide'
                   : '')
               }

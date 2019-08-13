@@ -18,8 +18,8 @@ class Mainpage extends React.Component {
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
-      dataSource: '/data/data1try.json',
-      initYearMonth: 201705,
+      dataSource: '/data/data1.json',
+      initYearMonth: 201706,
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
@@ -74,7 +74,7 @@ class Mainpage extends React.Component {
   nextDataSearch = () => {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
-    for (let m = 1; m < 24; m++) {
+    for (let m = 1; m < 8; m++) {
       const next = fetchData.filter(
         item =>
           item.date.indexOf(
@@ -96,7 +96,7 @@ class Mainpage extends React.Component {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
     // console.log(fetchData)
-    for (let n = 1; n < 24; n++) {
+    for (let n = 1; n < 8; n++) {
       const prev = fetchData.filter(
         item =>
           item.date.indexOf(
@@ -430,6 +430,7 @@ class Mainpage extends React.Component {
         price: 'price',
       },
     }
+
     return (
       <>
         <div className="wrapper">
