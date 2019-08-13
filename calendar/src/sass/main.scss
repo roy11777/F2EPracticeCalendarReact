@@ -70,10 +70,10 @@ body {
   background: $tourInfo-hover-bg !important;
   border: 1px solid $tourInfo-border-hover-color !important;
 }
+
 .wrapper {
   position: relative;
-  width: $screen-lg-desktop;
-  margin: 0 auto;
+  width: 100%;
   .switchBtn {
     position: absolute;
     left: 0;
@@ -81,7 +81,16 @@ body {
     flex-direction: column;
   }
   .container {
-    width: 50%;
+    @media screen and (min-width: $screen-desktop) {
+      width: 50%;
+    }
+    @media screen and (min-width: $screen-tablet) and (max-width: $screen-tablet-max) {
+      width: 60%;
+    }
+    @media screen and (max-width: $screen-phone-max) {
+      width: 70%;
+    }
+
     // min-height: 400px;
     padding: 12px;
     margin: 0 auto;

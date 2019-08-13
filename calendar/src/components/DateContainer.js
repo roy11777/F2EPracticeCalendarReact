@@ -39,15 +39,23 @@ class DateContainer extends React.Component {
     // 初始化列表顯示內容
   }
 
-  handleRowFocus = i => {
+  handleRowFocus = async i => {
     // console.log(this.props.rowContent.current.childNodes[i])
-    this.props.rowContent.current.childNodes[i].classList.add('onFocus')
-    console.log(i)
+    const eleClick = this.props.rowContent.current.childNodes
+    for (let j = 0; j < eleClick.length; j++) {
+      eleClick[j].classList.remove('onFocus')
+    }
+    await eleClick[i].classList.add('onFocus')
+    // console.log(i)
   }
-  handleStraightFocus = i => {
+  handleStraightFocus = async i => {
     // console.log(this.props.rowContent.current.childNodes[i])
-    this.props.straightDataShow.current.childNodes[i].classList.add('onFocus')
-    console.log(i)
+    const eleClick = this.props.straightDataShow.current.childNodes
+    for (let j = 0; j < eleClick.length; j++) {
+      eleClick[j].classList.remove('onFocus')
+    }
+    eleClick[i].classList.add('onFocus')
+    // console.log(i)
   }
 
   render() {
