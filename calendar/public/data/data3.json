@@ -57,94 +57,6 @@
     },
     {
         "guaranteed": false,
-        "date": "2017/08/11",
-        "price": 82299,
-        "availableVancancy": 2,
-        "totalVacnacy": 304,
-        "status": "額滿"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/02/28",
-        "price": 52251,
-        "availableVancancy": 38,
-        "totalVacnacy": 396,
-        "status": "預定"
-    },
-    {
-        "guaranteed": true,
-        "date": "2017/12/29",
-        "price": 68789,
-        "availableVancancy": 20,
-        "totalVacnacy": 342,
-        "status": "截止"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/01/25",
-        "price": 21900,
-        "availableVancancy": 15,
-        "totalVacnacy": 128,
-        "status": "預定"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/05/30",
-        "price": 65383,
-        "availableVancancy": 69,
-        "totalVacnacy": 191,
-        "status": "截止"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/06/25",
-        "price": 16754,
-        "availableVancancy": 53,
-        "totalVacnacy": 299,
-        "status": "報名"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/05/04",
-        "price": 50804,
-        "availableVancancy": 67,
-        "totalVacnacy": 205,
-        "status": "額滿"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/01/16",
-        "price": 94477,
-        "availableVancancy": 5,
-        "totalVacnacy": 128,
-        "status": "截止"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/08/07",
-        "price": 12291,
-        "availableVancancy": 76,
-        "totalVacnacy": 335,
-        "status": "截止"
-    },
-    {
-        "guaranteed": true,
-        "date": "2017/03/07",
-        "price": 61888,
-        "availableVancancy": 97,
-        "totalVacnacy": 89,
-        "status": "預定"
-    },
-    {
-        "guaranteed": true,
-        "date": "2017/12/08",
-        "price": 86774,
-        "availableVancancy": 9,
-        "totalVacnacy": 460,
-        "status": "額滿"
-    },
-    {
-        "guaranteed": false,
         "date": "2017/12/18",
         "price": 80954,
         "availableVancancy": 40,
@@ -1097,38 +1009,6 @@
     },
     {
         "guaranteed": true,
-        "date": "2018/02/26",
-        "price": 1707,
-        "availableVancancy": 72,
-        "totalVacnacy": 384,
-        "status": "報名"
-    },
-    {
-        "guaranteed": false,
-        "date": "2017/03/16",
-        "price": 51348,
-        "availableVancancy": 89,
-        "totalVacnacy": 182,
-        "status": "預定"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/07/19",
-        "price": 67928,
-        "availableVancancy": 91,
-        "totalVacnacy": 451,
-        "status": "截止"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/11/14",
-        "price": 38449,
-        "availableVancancy": 25,
-        "totalVacnacy": 145,
-        "status": "額滿"
-    },
-    {
-        "guaranteed": true,
         "date": "2017/04/04",
         "price": 1217,
         "availableVancancy": 97,
@@ -1678,54 +1558,6 @@
         "availableVancancy": 0,
         "totalVacnacy": 482,
         "status": "後補"
-    },
-    {
-        "guaranteed": true,
-        "date": "2017/07/15",
-        "price": 3307,
-        "availableVancancy": 11,
-        "totalVacnacy": 448,
-        "status": "後補"
-    },
-    {
-        "guaranteed": false,
-        "date": "2017/12/27",
-        "price": 60879,
-        "availableVancancy": 32,
-        "totalVacnacy": 384,
-        "status": "報名"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/10/30",
-        "price": 27326,
-        "availableVancancy": 16,
-        "totalVacnacy": 59,
-        "status": "預定"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/06/22",
-        "price": 15652,
-        "availableVancancy": 23,
-        "totalVacnacy": 94,
-        "status": "截止"
-    },
-    {
-        "guaranteed": false,
-        "date": "2017/08/22",
-        "price": 76078,
-        "availableVancancy": 43,
-        "totalVacnacy": 269,
-        "status": "後補"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/04/21",
-        "price": 88864,
-        "availableVancancy": 7,
-        "totalVacnacy": 296,
-        "status": "額滿"
     },
     {
         "guaranteed": true,
@@ -2302,54 +2134,6 @@
         "availableVancancy": 35,
         "totalVacnacy": 313,
         "status": "額滿"
-    },
-    {
-        "guaranteed": false,
-        "date": "2018/02/19",
-        "price": 41171,
-        "availableVancancy": 26,
-        "totalVacnacy": 52,
-        "status": "截止"
-    },
-    {
-        "guaranteed": false,
-        "date": "2017/06/20",
-        "price": 10697,
-        "availableVancancy": 82,
-        "totalVacnacy": 363,
-        "status": "報名"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/04/16",
-        "price": 39076,
-        "availableVancancy": 60,
-        "totalVacnacy": 415,
-        "status": "報名"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/10/12",
-        "price": 50419,
-        "availableVancancy": 2,
-        "totalVacnacy": 76,
-        "status": "預定"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/01/31",
-        "price": 46890,
-        "availableVancancy": 4,
-        "totalVacnacy": 140,
-        "status": "截止"
-    },
-    {
-        "guaranteed": true,
-        "date": "2018/10/02",
-        "price": 50033,
-        "availableVancancy": 50,
-        "totalVacnacy": 93,
-        "status": "截止"
     },
     {
         "guaranteed": false,

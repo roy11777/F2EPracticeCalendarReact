@@ -9,30 +9,34 @@ class DateContainer extends React.Component {
 
   async componentDidMount() {
     try {
-      //   TODO:直接fetch array
-      const response = await fetch(this.props.Package.dataSource)
-      const jsonObject = await response.json()
-      const settingObj = this.props.Package.dataKeySetting
-      const parseData = []
+      const sourcePattern = /^(((^((https||http):\/\/(\w+\.)+\w+)\/?)?)||(((((\.){0,2})\/)+)?))((\w+\/)+)?(((((\.){0,2})\/)+)?(\w+(\.(\w+))?))?$/
+      if (sourcePattern.test(this.props.Package.dataSource)) {
+        const response = await fetch(this.props.Package.dataSource)
+        const jsonObject = await response.json()
+        const settingObj = this.props.Package.dataKeySetting
+        const parseData = []
 
-      //   轉換不同json對應key
-      for (let i = 0; i < jsonObject.length; i++) {
-        let obj = {
-          guaranteed: jsonObject[i][settingObj.guaranteed],
-          date: jsonObject[i].date,
-          status: jsonObject[i][settingObj.status],
-          available: jsonObject[i][settingObj.available],
-          total: jsonObject[i][settingObj.total],
-          price: jsonObject[i][settingObj.price],
+        //   轉換不同json對應key
+        for (let i = 0; i < jsonObject.length; i++) {
+          let obj = {
+            guaranteed: jsonObject[i][settingObj.guaranteed],
+            date: jsonObject[i].date,
+            status: jsonObject[i][settingObj.status],
+            available: jsonObject[i][settingObj.available],
+            total: jsonObject[i][settingObj.total],
+            price: jsonObject[i][settingObj.price],
+          }
+          parseData.push(obj)
         }
-        parseData.push(obj)
-      }
 
-      await this.props.Package.method(parseData)
-      await this.props.Package.methodstraight()
-      // 如果當月沒資則觸發下列搜尋最近function
-      await this.props.Package.dataSearch()
-      // console.log(this.props.Package.initYearMonth)
+        await this.props.Package.method(parseData)
+        await this.props.Package.methodstraight()
+        // 如果當月沒資則觸發下列搜尋最近function
+        await this.props.Package.dataSearch()
+        // console.log(this.props.Package.initYearMonth)
+      } else {
+        alert('請輸入正確來源')
+      }
     } catch (e) {
       console.log(e)
     }
@@ -68,7 +72,6 @@ class DateContainer extends React.Component {
     const handleStraightFocus = this.handleStraightFocus
     return (
       <>
-        {/* TODO:border設定 */}
         {/* 日歷模式 */}
         <div ref={this.props.rowData}>
           <div className="weekday list-unstyle d-flex jusifyCenter alignCenter">
@@ -83,7 +86,7 @@ class DateContainer extends React.Component {
           <div className="d-flex itineraryBox" ref={this.props.rowContent}>
             {this.props.Package.CurrentData.map(function(ele, index) {
               const tour = ele.matchTour
-              console.log(tour)
+              // console.log(tour)
               return (
                 <div
                   onClick={handleRowFocus.bind(this, index)}

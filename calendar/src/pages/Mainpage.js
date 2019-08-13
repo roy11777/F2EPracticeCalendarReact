@@ -18,7 +18,7 @@ class Mainpage extends React.Component {
       CurrentData: [],
       //   當月全部資料，未整
       CurrentDataPart: [],
-      dataSource: '/data/data1try.json',
+      dataSource: '/data/data1.json',
       initYearMonth: 201705,
       //   預設顯示月曆還是列表
       switch: false,
@@ -84,7 +84,7 @@ class Mainpage extends React.Component {
           ) !== -1
       )
       if (next.length !== 0) {
-        console.log(next)
+        // console.log(next)
         return [m, next.length]
       }
     }
@@ -95,7 +95,7 @@ class Mainpage extends React.Component {
   prevDataSearch = () => {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
-    console.log(fetchData)
+    // console.log(fetchData)
     for (let n = 1; n < 24; n++) {
       const prev = fetchData.filter(
         item =>
@@ -183,7 +183,7 @@ class Mainpage extends React.Component {
     const right = moment(this.right.current.innerText, 'YYYYMM').format(
       'YYYYMM'
     )
-    console.log(left)
+    // console.log(left)
     // 上個月所有資料
     const PrevMonthAlltour = await jsonData.filter(
       item => item.date.indexOf(moment(left, 'YYYYMM').format('YYYY/MM')) !== -1
@@ -346,7 +346,6 @@ class Mainpage extends React.Component {
     }
   }
 
-  // TODO:改掉切換顯示內容渲染的頁面
   handlePrevPage = async () => {
     const perPage = this.state.perPage
     const nowPage = this.state.nowPage
@@ -357,7 +356,6 @@ class Mainpage extends React.Component {
       await this.handleStraightPages(perPage, nowPage)
     }
   }
-  // TODO:改掉切換顯示內容渲染的頁面
   handleNextPage = async () => {
     const perPage = this.state.perPage
     const nowPage = this.state.nowPage
@@ -398,6 +396,8 @@ class Mainpage extends React.Component {
       nextDataCheck: this.nextDataSearch,
     }
 
+    // const sourcePattern = /^(((^((https||http):\/\/(\w+\.)+\w+)\/?)?)||(((((\.){0,2})\/)+)?))((\w+\/)+)?(((((\.){0,2})\/)+)?(\w+(\.(\w+))?))?$/
+    // console.log(sourcePattern.test('/data/data1.json'))
     // 計算總頁數
     const perPage = this.state.perPage
     const allElement = this.state.CurrentDataPart
