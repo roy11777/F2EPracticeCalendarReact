@@ -19,7 +19,7 @@ class Mainpage extends React.Component {
       //   當月全部資料，未整
       CurrentDataPart: [],
       dataSource: '/data/data1.json',
-      initYearMonth: 201705,
+      initYearMonth: 201706,
       //   預設顯示月曆還是列表
       switch: false,
       perPage: 8,
@@ -430,6 +430,7 @@ class Mainpage extends React.Component {
         price: 'price',
       },
     }
+
     return (
       <>
         <div className="wrapper">
