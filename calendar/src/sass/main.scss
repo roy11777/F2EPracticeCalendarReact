@@ -70,6 +70,9 @@ body {
   background: $tourInfo-hover-bg !important;
   border: 1px solid $tourInfo-border-hover-color !important;
 }
+.hide {
+  visibility: hidden;
+}
 
 .wrapper {
   position: relative;

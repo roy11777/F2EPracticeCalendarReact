@@ -55,6 +55,10 @@ body {
   border: 1px solid #66bb3c !important;
 }
 
+.hide {
+  visibility: hidden;
+}
+
 .wrapper {
   position: relative;
   width: 100%;

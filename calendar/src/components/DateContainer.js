@@ -251,7 +251,10 @@ class DateContainer extends React.Component {
           </div>
           <div className="pageArea d-flex">
             <div
-              className="pageBtnStraight "
+              className={
+                'pageBtnStraight ' +
+                (this.props.Package.nowPage === 1 ? ' hide' : '')
+              }
               onClick={this.props.Package.handlePrevPage}
             >
               <span className="left"></span>
@@ -263,7 +266,12 @@ class DateContainer extends React.Component {
                 this.props.Package.totalPages}
             </div>
             <div
-              className="pageBtnStraight "
+              className={
+                'pageBtnStraight ' +
+                (this.props.Package.nowPage === this.props.Package.totalPages
+                  ? 'hide'
+                  : '')
+              }
               onClick={this.props.Package.handleNextPage}
             >
               下一頁
