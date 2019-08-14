@@ -15,6 +15,7 @@ class DateContainer extends React.Component {
       const parseData = []
       let jsonObject = []
       if (typeof resourse === 'string') {
+        console.log('來源為網址')
         if (sourcePattern.test(this.props.Package.dataSource)) {
           const response = await fetch(this.props.Package.dataSource)
           jsonObject = await response.json()
@@ -23,6 +24,7 @@ class DateContainer extends React.Component {
           alert('請輸入正確來源')
         }
       } else if (Array.isArray(resourse)) {
+        console.log('來源為陣列')
         jsonObject = resourse
       } else {
         console.log('來源不為陣列或網址')
