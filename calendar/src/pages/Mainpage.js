@@ -74,7 +74,7 @@ class Mainpage extends React.Component {
   nextDataSearch = () => {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
-    for (let m = 1; m < 8; m++) {
+    for (let m = 1; m < 12; m++) {
       const next = fetchData.filter(
         item =>
           item.date.indexOf(
@@ -96,7 +96,7 @@ class Mainpage extends React.Component {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
     // console.log(fetchData)
-    for (let n = 1; n < 8; n++) {
+    for (let n = 1; n < 12; n++) {
       const prev = fetchData.filter(
         item =>
           item.date.indexOf(

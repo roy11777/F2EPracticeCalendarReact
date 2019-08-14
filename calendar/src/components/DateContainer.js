@@ -9,34 +9,44 @@ class DateContainer extends React.Component {
 
   async componentDidMount() {
     try {
+      const resourse = this.props.Package.dataSource
       const sourcePattern = /^(((^((https||http):\/\/(\w+\.)+\w+)\/?)?)||(((((\.){0,2})\/)+)?))((\w+\/)+)?(((((\.){0,2})\/)+)?(\w+(\.(\w+))?))?$/
-      if (sourcePattern.test(this.props.Package.dataSource)) {
-        const response = await fetch(this.props.Package.dataSource)
-        const jsonObject = await response.json()
-        const settingObj = this.props.Package.dataKeySetting
-        const parseData = []
-
-        //   轉換不同json對應key
-        for (let i = 0; i < jsonObject.length; i++) {
-          let obj = {
-            guaranteed: jsonObject[i][settingObj.guaranteed],
-            date: jsonObject[i].date,
-            status: jsonObject[i][settingObj.status],
-            available: jsonObject[i][settingObj.available],
-            total: jsonObject[i][settingObj.total],
-            price: jsonObject[i][settingObj.price],
-          }
-          parseData.push(obj)
+      const settingObj = this.props.Package.dataKeySetting
+      const parseData = []
+      let jsonObject = []
+      if (typeof resourse === 'string') {
+        console.log('123')
+        if (sourcePattern.test(this.props.Package.dataSource)) {
+          const response = await fetch(this.props.Package.dataSource)
+          jsonObject = await response.json()
+        } else {
+          alert('請輸入正確來源')
         }
-
-        await this.props.Package.method(parseData)
-        await this.props.Package.methodstraight()
-        // 如果當月沒資則觸發下列搜尋最近function
-        await this.props.Package.dataSearch()
-        // console.log(this.props.Package.initYearMonth)
+      } else if (Array.isArray(resourse)) {
+        jsonObject = resourse
       } else {
-        alert('請輸入正確來源')
+        alert('來源不為陣列或網址')
+        return
       }
+      // console.log(jsonObject)
+      //   轉換不同json對應key
+      for (let i = 0; i < jsonObject.length; i++) {
+        let obj = {
+          guaranteed: jsonObject[i][settingObj.guaranteed],
+          date: jsonObject[i].date,
+          status: jsonObject[i][settingObj.status],
+          available: jsonObject[i][settingObj.available],
+          total: jsonObject[i][settingObj.total],
+          price: jsonObject[i][settingObj.price],
+        }
+        parseData.push(obj)
+      }
+
+      await this.props.Package.method(parseData)
+      await this.props.Package.methodstraight()
+      // 如果當月沒資則觸發下列搜尋最近function
+      await this.props.Package.dataSearch()
+      // console.log(this.props.Package.initYearMonth)
     } catch (e) {
       console.log(e)
     }
