@@ -74,7 +74,7 @@ class Mainpage extends React.Component {
   nextDataSearch = () => {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
-    for (let m = 1; m < 12; m++) {
+    for (let m = 1; m < 18; m++) {
       const next = fetchData.filter(
         item =>
           item.date.indexOf(
@@ -96,7 +96,7 @@ class Mainpage extends React.Component {
     const stateYear = this.state.initYearMonth
     const fetchData = this.state.fetchData
     // console.log(fetchData)
-    for (let n = 1; n < 12; n++) {
+    for (let n = 1; n < 18; n++) {
       const prev = fetchData.filter(
         item =>
           item.date.indexOf(
@@ -128,27 +128,32 @@ class Mainpage extends React.Component {
       let prevlength = this.prevDataSearch()[1] //資料數量
 
       if (m > n) {
+        console.log('左邊資料距離較近')
         this.setState({
           initYearMonth: moment(stateYear, 'YYYYMM')
             .add(-n, 'months')
             .format('YYYY/MM'),
         })
       } else if (m < n) {
+        console.log('右邊資料距離較近')
         this.setState({
           initYearMonth: moment(stateYear, 'YYYYMM')
             .add(m, 'months')
             .format('YYYY/MM'),
         })
       } else if ((m = n)) {
+        console.log('左右月份距離相同')
         // 如果兩筆最近資料距離相同，則判斷哪邊的資料數最多，
         // 如果資料數也相等，預設抓上個月
         if (nextLength > prevlength) {
+          console.log('右邊資料較多')
           this.setState({
             initYearMonth: moment(stateYear, 'YYYYMM')
               .add(m, 'months')
               .format('YYYY/MM'),
           })
         } else {
+          console.log('左邊資料較多')
           this.setState({
             initYearMonth: moment(stateYear, 'YYYYMM')
               .add(-n, 'months')
