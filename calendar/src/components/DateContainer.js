@@ -9,6 +9,7 @@ class DateContainer extends React.Component {
 
   async componentDidMount() {
     try {
+      console.log("123")
       const resourse = this.props.Package.dataSource
       const sourcePattern = /^(((^((https||http):\/\/(\w+\.)+\w+)\/?)?)||(((((\.){0,2})\/)+)?))((\w+\/)+)?(((((\.){0,2})\/)+)?(\w+(\.(\w+))?))?$/
       const settingObj = this.props.Package.dataKeySetting
@@ -98,7 +99,7 @@ class DateContainer extends React.Component {
             <div>星期六</div>
           </div>
           <div className="d-flex itineraryBox" ref={this.props.rowContent}>
-            {this.props.Package.CurrentData.map(function(ele, index) {
+            {this.props.Package.CurrentData.map(function (ele, index) {
               const tour = ele.matchTour
               // console.log(tour)
               return (
@@ -116,21 +117,21 @@ class DateContainer extends React.Component {
                       tour.length === 0
                         ? ''
                         : tour.length > 1
-                        ? ''
-                        : tour[0].guaranteed === true
-                        ? 'readytogo'
-                        : ''
+                          ? ''
+                          : tour[0].guaranteed === true
+                            ? 'readytogo'
+                            : ''
                     }
                   >
                     {tour.length === 0
                       ? ''
                       : tour.length > 1
-                      ? ''
-                      : tour[0].guaranteed === true
-                      ? '成團'
-                      : ''
-                    //判斷是否無行程避免undefined在判斷是否超過一個行程顯示不同內容
-                    // 如果只有一個行程在render進html
+                        ? ''
+                        : tour[0].guaranteed === true
+                          ? '成團'
+                          : ''
+                      //判斷是否無行程避免undefined在判斷是否超過一個行程顯示不同內容
+                      // 如果只有一個行程在render進html
                     }
                   </span>
                   <span className={tour.length > 1 ? 'mutiTour' : ''}>
@@ -143,37 +144,37 @@ class DateContainer extends React.Component {
                       tour.length === 0
                         ? ''
                         : tour.length > 1
-                        ? 'moreGroup  blue'
-                        : tour[0].status === '報名'
-                        ? 'org'
-                        : tour[0].status === '預定'
-                        ? 'org'
-                        : tour[0].status === '後補'
-                        ? 'lightg'
-                        : tour[0].status === '請洽專員'
-                        ? 'lightg'
-                        : 'gray'
+                          ? 'moreGroup  blue'
+                          : tour[0].status === '報名'
+                            ? 'org'
+                            : tour[0].status === '預定'
+                              ? 'org'
+                              : tour[0].status === '後補'
+                                ? 'lightg'
+                                : tour[0].status === '請洽專員'
+                                  ? 'lightg'
+                                  : 'gray'
                     }
                   >
                     {tour.length === 0
                       ? ''
                       : tour.length > 1
-                      ? '看更多團'
-                      : tour[0].status}
+                        ? '看更多團'
+                        : tour[0].status}
                   </span>
                   <span className={tour.length > 0 ? 'dark' : ''}>
                     {tour.length === 0
                       ? ''
                       : tour.length > 1
-                      ? ''
-                      : '可賣：' + tour[0].available}
+                        ? ''
+                        : '可賣：' + tour[0].available}
                   </span>
                   <span className={tour.length > 0 ? 'dark' : ''}>
                     {tour.length === 0
                       ? ''
                       : tour.length > 1
-                      ? ''
-                      : '團位：' + tour[0].total}
+                        ? ''
+                        : '團位：' + tour[0].total}
                   </span>
                   <span className={tour.length > 0 ? 'red' : ''}>
                     {/* TODO://要抓到最低價錢 */}
@@ -201,7 +202,7 @@ class DateContainer extends React.Component {
             className="itineraryStraightBox d-flex"
             ref={this.props.straightDataShow}
           >
-            {this.props.Package.CurrentDataPart.map(function(e, index) {
+            {this.props.Package.CurrentDataPart.map(function (e, index) {
               const weekday = moment(e.date, 'YYYY/MM/DD').weekday()
 
               return (
@@ -219,18 +220,18 @@ class DateContainer extends React.Component {
                           (weekday === 0
                             ? '日'
                             : weekday === 1
-                            ? '一'
-                            : weekday === 2
-                            ? '二'
-                            : weekday === 3
-                            ? '三'
-                            : weekday === 4
-                            ? '四'
-                            : weekday === 5
-                            ? '五'
-                            : weekday === 6
-                            ? '六'
-                            : '')}
+                              ? '一'
+                              : weekday === 2
+                                ? '二'
+                                : weekday === 3
+                                  ? '三'
+                                  : weekday === 4
+                                    ? '四'
+                                    : weekday === 5
+                                      ? '五'
+                                      : weekday === 6
+                                        ? '六'
+                                        : '')}
                       </span>
                     </div>
                     <div className="detail d-flex jusifyCenter">
@@ -250,16 +251,16 @@ class DateContainer extends React.Component {
                           e.length === 0
                             ? ''
                             : e.length > 1
-                            ? 'blue'
-                            : e.status === '報名'
-                            ? 'org'
-                            : e.status === '預定'
-                            ? 'org'
-                            : e.status === '後補'
-                            ? 'lightg'
-                            : e.status === '請洽專員'
-                            ? 'lightg'
-                            : 'gray'
+                              ? 'blue'
+                              : e.status === '報名'
+                                ? 'org'
+                                : e.status === '預定'
+                                  ? 'org'
+                                  : e.status === '後補'
+                                    ? 'lightg'
+                                    : e.status === '請洽專員'
+                                      ? 'lightg'
+                                      : 'gray'
                         }
                       >
                         {e.status}
@@ -291,7 +292,7 @@ class DateContainer extends React.Component {
               className={
                 'pageBtnStraight ' +
                 (Number(this.props.Package.nowPage) ===
-                Number(this.props.Package.totalPages)
+                  Number(this.props.Package.totalPages)
                   ? 'hide'
                   : '')
               }
